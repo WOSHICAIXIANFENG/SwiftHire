@@ -44,9 +44,9 @@ var ObjectId = require('mongodb').ObjectID;
  RestAPI ------ jobs/:uerId/post ------ Get -------  Return all jobs I posted
  RestAPI ------ jobs/:uerId/apply ------ Get -------  Return all jobs I applied for.
 
- RestAPI ------ job/:jobId/candidate ----- Get (path parameter:jobId) ----  return all canidate with detail infor.
- RestAPI ------ job/:jobId/candidate/:candiateId ----  See candidate's profile info.
- RestAPI ------ job/choose ----- POST (jobId, candidateId)
+ RestAPI ------ jobs/:jobId/candidate ----- Get (path parameter:jobId) ----  return all candidate with detail info.
+ RestAPI ------ jobs/:jobId/candidate/:candidateId ----  See candidate's profile info.
+ RestAPI ------ jobs/choose ----- POST (jobId, candidateId)
 
 *
 * */
@@ -85,7 +85,7 @@ router.get('/', function(req, res, next){
  *  Return all jobs I posted
  */
 router.get('/:uerId/post', function(req, res, next) {
-    let query = {owner: ObjectId(req.params['userId'])};
+    let query = {"owner": ObjectId(req.params['userId'])};
     req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
         if (err) next(err);
         res.json(docArray);
@@ -97,11 +97,35 @@ router.get('/:uerId/post', function(req, res, next) {
  *  Return all jobs I applied successfully
  */
 router.get('/:uerId/apply', function(req, res, next) {
-    let query = {candidate: ObjectId(req.params['userId'])};
+    let query = {"candidate": ObjectId(req.params['userId'])};
     req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
         if (err) next(err);
         res.json(docArray);
         res.status(200);
+    });
+});
+
+/**
+ * Get all candidates for this job
+ */
+router.get('/:jobId/candidate', function(req, res, next) {
+    let query = {"_id": ObjectId(req.params['jobId'])};
+    req.jobs.findOne(query, function(err, doc){
+        if (err) next(err);
+        console.log(doc.waitingList);
+        res.json(doc.waitingList);
+    });
+});
+
+/**
+ * Get one candidate's detail information
+ */
+router.get('/:jobId/candidate/:candidateId', function(req, res, next) {
+    let query = {"_id": ObjectId(req.params['candidateId'])};
+    req.users.findOne(query, function(err, doc){
+        if (err) next(err);
+        console.log(doc);
+        res.json(doc);
     });
 });
 
