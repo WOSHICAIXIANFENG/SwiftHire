@@ -33,9 +33,6 @@ app.use(function(req, res, next) {
   req.db = db;
   req.jobs = db.bind('jobs');
   req.users = db.bind('users');
-    console.log("Samuel Test app.js  db = " + db);
-    console.log("Samuel Test app.js  jobs = " + req.jobs);
-  console.log("Samuel Test app.js  req = " + req.users);
   next();
 });
 
