@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { JobService } from './service/job.service';
+import { UserService } from './service/user.service';
+import { HttpModule} from '@angular/http';
 
 import { AppComponent } from './app.component';
 
@@ -8,9 +11,10 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [JobService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
