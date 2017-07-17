@@ -4,6 +4,22 @@ var fetch = require('node-fetch');
 
 const Rx = require('@reactivex/rxjs');
 
+/**
+ * User Collection {
+	_id:
+	name: string,
+	avatar: url,
+	comments: [
+		{content: string, date: date, rate:number, jobId: number},
+		{},
+	]
+}
+
+ ========= Rest API List
+ RestAPI ------ user/:userId ----- Get  ----- Show user's profile.
+ RestAPI ------ job/:jobId/candidate/:candiateId ----  See candidate's profile info.
+
+ */
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

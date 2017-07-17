@@ -5,18 +5,9 @@ var express = require('express');
 var router = express.Router();
 
 /*
-* RestAPI ------ job/   ------ GET ---- location parameter ??
-  RestAPI ------ job/post   ------ Post ---- create  // post a job
-  RestAPI ------ job/apply ----- POST
-  RestAPI ------ job/choose ----- POST jobId, userId,
-
- Other Rest APIs
- job/:id  ---- delete
- job/:id  ---- put
-
-
-
- Job Collection {
+*
+*
+* Job Collection {
  name: string,
  description: string,
  category:string,
@@ -27,12 +18,34 @@ var router = express.Router();
  preferTime: time, // preferred time.
  owner: userId,
  candiate: anotherUserId,
+ available: boolean, // true --- is aviable for all users, false --- when the owner already picked one candidate. or job expired
  waitingList:[
  {userId},
  {userId}
  ]
  }
 
+ ==================== Rest API
+ Jobs Index  {
+ category:string,
+ location: [long, lat],
+ duration: number,// duration per hour
+ hourFee: number,// hourly fees rate
+ preferDate: date,//preferred date
+ preferTime: time, // preferred time.
+ }
+
+ RestAPI ------ job/   ------ GET (location parameter)  ----- return all nearby jobs.
+
+ RestAPI ------ job/post  ------ Post (form paramters)---- create a job.
+ RestAPI ------ job/apply ----- POST (jobId, candidateId) ---- Enroll to one job.
+
+ RestAPI ------ user/:uerId/job/post ------ Get -------  Return all jobs I posted
+ RestAPI ------ user/:uerId/job/apply ------ Get -------  Return all jobs I applyed for.
+
+ RestAPI ------ job/:jobId/candidate ----- Get (path parameter:jobId) ----  return all canidate with detail infor.
+ RestAPI ------ job/:jobId/candidate/:candiateId ----  See candidate's profile info.
+ RestAPI ------ job/choose ----- POST (jobId, candidateId)
 
 *
 * */
