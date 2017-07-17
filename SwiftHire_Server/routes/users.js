@@ -21,24 +21,83 @@ const Rx = require('@reactivex/rxjs');
 
  */
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    //res.send('respond with a resource');
-    // Solution1: use promise
-    fetch('http://jsonplaceholder.typicode.com/users/')
-        .then(function(res){
-            return res.json(); // [object Promise]
-        }).then(function(json){
-        //console.log(json);
+/**
+ * Load some testing data
+ */
+router.get('/init', function(req, res, next) {
+    let obj1 = {"name": "dara",
+        "password": "123456",
+        "avatar": "http://localhost:4000/images/user3.png",
+        "comments": [
+            {"jobId": 1, "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
+            {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
+        ]};
+    let obj2 = {"name": "samuel",
+        "password": "123456",
+        "avatar": "http://localhost:4000/images/user1.png",
+        "comments": [
+            {"jobId": 1, "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
+            {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
+        ]};
+    let obj3 = {"name": "diego",
+        "password": "123456",
+        "avatar": "http://localhost:4000/images/user2.png",
+        "comments": [
+            {"jobId": 1, "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
+            {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
+        ]};
 
-        res.render("users", { users: json });
-    }).catch(function(err) {
-        console.log(err);
-        res.render("error", { message: 'some error happens', error:{
-            status: 505,
-            stack: 'Some stack information'
-        }});
+    req.users.insert(obj1, function(err, insertData){
+        if (err) next(err);
     });
+
+    req.users.insert(obj2, function(err, insertData){
+        if (err) next(err);
+    });
+
+    req.users.insert(obj3, function(err, insertData){
+        if (err) next(err);
+    });
+})
+
+
+/*
+* GET users listing.
+*/
+router.get('/', function(req, res, next) {
+    req.users.find({}).toArray((err, docArray) => {
+         if (err) next(err);
+         console.log(docArray);
+         res.json(docArray);
+     });
+})
+
+/**
+ * Get user detail info
+ */
+router.get('/:userId', function(req, res, next) {
+    let userId = req.params['userId'];
+    //console.log("userId = " + userId);
+    req.users.find({"_id": userId}).toArray(function(error, data) {
+        if (error) next(error);
+        console.log(data);
+        res.json(data);
+    });
+
+    // // Solution1: use promise
+    // fetch('http://jsonplaceholder.typicode.com/users/')
+    //     .then(function(res){
+    //         return res.json(); // [object Promise]
+    //     }).then(function(json){
+    //     //console.log(json);
+    //     res.render("users", { users: json });
+    // }).catch(function(err) {
+    //     console.log(err);
+    //     res.render("error", { message: 'some error happens', error:{
+    //         status: 505,
+    //         stack: 'Some stack information'
+    //     }});
+    // });
 });
 
 module.exports = router;
