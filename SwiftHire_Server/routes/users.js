@@ -35,10 +35,13 @@ router.get('/', function(req, res, next) {
  * Get user detail info
  */
 router.get('/:userId', function(req, res, next) {
-    //res.send('respond with a resource');
-    console.log("userId = " + req.params);
-    req.users.find({_id: userId}, function(error, data) {
+    let userId = req.params['userId'];
+    //console.log("userId = " + userId);
+
+    req.users.find({"_id": userId}).toArray(function(error, data) {
+        if (error) next(error);
         console.log(data);
+        res.json(data);
     });
 
     // // Solution1: use promise
