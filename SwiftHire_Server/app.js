@@ -6,8 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cons = require('consolidate');
 var mongo = require('mongoskin');
-var db = mongo.db("mongodb://localhost:27017/db", {native_parser:true});
-var jobs = db.jobs;
+var db = mongo.db("mongodb://localhost:27017/SwiftHire", {native_parser:true});
 var index = require('./routes/index');
 var usersRouter = require('./routes/users');
 var jobRouter = require('./routes/jobs');
@@ -30,11 +29,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // route for db
-app.use('', function(req, res, next) {
+app.use(function(req, res, next) {
   req.db = db;
-  req.jobs = jobs;
+  req.jobs = db.bind('jobs');
+  req.users = db.bind('users');
+    console.log("Samuel Test app.js  db = " + db);
+    console.log("Samuel Test app.js  jobs = " + req.jobs);
+  console.log("Samuel Test app.js  req = " + req.users);
   next();
-
 });
 
 app.use('/', index);

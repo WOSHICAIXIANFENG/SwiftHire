@@ -21,24 +21,40 @@ const Rx = require('@reactivex/rxjs');
 
  */
 
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    //res.send('respond with a resource');
-    // Solution1: use promise
-    fetch('http://jsonplaceholder.typicode.com/users/')
-        .then(function(res){
-            return res.json(); // [object Promise]
-        }).then(function(json){
-        //console.log(json);
+    req.users.find({}).toArray((err, docArray) => {
+         if (err) next(err);
+         console.log(docArray);
+         res.json(docArray);
+     });
+})
 
-        res.render("users", { users: json });
-    }).catch(function(err) {
-        console.log(err);
-        res.render("error", { message: 'some error happens', error:{
-            status: 505,
-            stack: 'Some stack information'
-        }});
+/**
+ * Get user detail info
+ */
+router.get('/:userId', function(req, res, next) {
+    //res.send('respond with a resource');
+    console.log("userId = " + req.params);
+    req.users.find({_id: userId}, function(error, data) {
+        console.log(data);
     });
+
+    // // Solution1: use promise
+    // fetch('http://jsonplaceholder.typicode.com/users/')
+    //     .then(function(res){
+    //         return res.json(); // [object Promise]
+    //     }).then(function(json){
+    //     //console.log(json);
+    //     res.render("users", { users: json });
+    // }).catch(function(err) {
+    //     console.log(err);
+    //     res.render("error", { message: 'some error happens', error:{
+    //         status: 505,
+    //         stack: 'Some stack information'
+    //     }});
+    // });
 });
 
 module.exports = router;
