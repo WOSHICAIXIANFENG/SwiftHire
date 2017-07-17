@@ -39,7 +39,7 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/users', usersRouter);
-app.use('/job', jobRouter);
+app.use('/jobs', jobRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

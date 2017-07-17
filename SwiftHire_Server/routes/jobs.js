@@ -11,7 +11,7 @@ var router = express.Router();
  name: string,
  description: string,
  category:string,
- location: [long, lat],
+ location: [lat, long],
  duration: number,// duration per hour
  hourFee: number,// hourly fees rate
  preferDate: date,//preferred date
@@ -68,7 +68,7 @@ router.get('/all', function(req, res, next){
 });
 
 /**
- * Test: get all jobs.
+ * Test: get 10 closest locations.
  */
 router.get('/', function(req, res, next){
     let lat= req.query.lat;
@@ -76,6 +76,7 @@ router.get('/', function(req, res, next){
     req.jobs.find({$near:{$geometry:{location:[lat,long]},$maxDistance:1000}}).limit(10).toArray(function(err, docArray){
         if (err) next(err);
         res.json(docArray);
+        res.status(200);
     });
 });
 
