@@ -68,6 +68,18 @@ router.get('/all', function(req, res, next){
 });
 
 /**
+ * Test: get all jobs.
+ */
+router.get('/', function(req, res, next){
+    let lat= req.query.lat;
+    let long = req.query.long;
+    req.jobs.find({$near:{$geometry:{location:[lat,long]},$maxDistance:1000}}).limit(10).toArray(function(err, docArray){
+        if (err) next(err);
+        res.json(docArray);
+    });
+});
+
+/**
  * Add one job
  */
 router.post('/', function(req, res, next){
