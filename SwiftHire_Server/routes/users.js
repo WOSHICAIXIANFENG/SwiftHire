@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router({caseSensitive: true, strict:true});
 var fetch = require('node-fetch');
-
+var ObjectId = require('mongodb').ObjectID;
 const Rx = require('@reactivex/rxjs');
 
 /**
@@ -77,27 +77,12 @@ router.get('/', function(req, res, next) {
  */
 router.get('/:userId', function(req, res, next) {
     let userId = req.params['userId'];
-    //console.log("userId = " + userId);
-    req.users.find({"_id": userId}).toArray(function(error, data) {
+    console.log("userId = " + userId);
+    req.users.find({"_id": ObjectId(userId)}).toArray(function(error, data) {
         if (error) next(error);
         console.log(data);
         res.json(data);
     });
-
-    // // Solution1: use promise
-    // fetch('http://jsonplaceholder.typicode.com/users/')
-    //     .then(function(res){
-    //         return res.json(); // [object Promise]
-    //     }).then(function(json){
-    //     //console.log(json);
-    //     res.render("users", { users: json });
-    // }).catch(function(err) {
-    //     console.log(err);
-    //     res.render("error", { message: 'some error happens', error:{
-    //         status: 505,
-    //         stack: 'Some stack information'
-    //     }});
-    // });
 });
 
 module.exports = router;

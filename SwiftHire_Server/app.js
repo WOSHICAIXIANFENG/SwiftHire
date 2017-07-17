@@ -34,6 +34,7 @@ app.use(function(req, res, next) {
   req.jobs = db.bind('jobs');
   req.users = db.bind('users');
   next();
+  req.db.close();
 });
 
 app.use('/', index);
