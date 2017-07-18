@@ -75,6 +75,8 @@ router.get('/', function(req, res, next){
     //!!! Note: Don't forget to parse coordinates to number
     let lat= parseFloat(req.query.lat);
     let long = parseFloat(req.query.long);
+    console.log(long);
+    console.log(lat);
     req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $maxDistance:500}}}).limit(10)
         .toArray(function(err, docArray){
         if (err) next(err);
@@ -159,7 +161,7 @@ router.post('/', function(req, res, next){
  * Load some testing data
  */
 router.get('/init', function(req, res, next) {
-    req.jobs.createIndex({'location:':'2dsphere'});
+    //req.jobs.createIndex({'location:':'2dsphere'}); // run in mongo shell
 
     let obj1 = {"_id":"1","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800002]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"1"};
     let obj2 = {"_id":"2","name":"Clean the restroom","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800019]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"2"};
