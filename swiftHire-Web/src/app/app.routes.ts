@@ -5,6 +5,7 @@ import { CandidatesComponent } from './component/candidates.component';
 import { CandidateComponent } from './component/candidate.component';
 
 const MY_ROUTES: Routes = [
+     { path:"home", redirectTo:'/'},
      { path: 'error', component: ErrorComponent },
      // A redirect route requires a pathMatch property to tell the router how to match a URL to the path of a route.
      // The default matching strategy of Angular router is
