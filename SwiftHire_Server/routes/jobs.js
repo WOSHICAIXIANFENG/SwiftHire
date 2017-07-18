@@ -3,7 +3,6 @@
  */
 var express = require('express');
 var router = express.Router();
-var ObjectId = require('mongodb').ObjectID;
 
 /*
 *
@@ -51,13 +50,6 @@ var ObjectId = require('mongodb').ObjectID;
 *
 * */
 
-// /**
-//  * Get all jobs ---- get query parameter location
-//  */
-// router.get('/', function(req, res, next){
-//     //var query =
-// });
-
 /**
  * Test: get all jobs.
  */
@@ -72,16 +64,13 @@ router.get('/all', function(req, res, next){
  * Test: get 10 closest locations.
  */
 router.get('/', function(req, res, next){
-    //!!! Note: Don't forget to parse coordinates to number
     let lat= parseFloat(req.query.lat);
     let long = parseFloat(req.query.long);
-    console.log(long);
-    console.log(lat);
     req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $maxDistance:500}}}).limit(10)
         .toArray(function(err, docArray){
+            console.log("Returning" + docArray);
         if (err) next(err);
         res.json(docArray);
-        res.status(200);
     });
 });
 
@@ -105,31 +94,6 @@ router.get('/:uerId/apply', function(req, res, next) {
     req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
         if (err) next(err);
         res.json(docArray);
-        res.status(200);
-    });
-});
-
-/**
- * Get all candidates for this job
- */
-router.get('/:jobId/candidate', function(req, res, next) {
-    let query = {"_id": ObjectId(req.params['jobId'])};
-    req.jobs.findOne(query, function(err, doc){
-        if (err) next(err);
-        console.log(doc.waitingList);
-        res.json(doc.waitingList);
-    });
-});
-
-/**
- * Get one candidate's detail information
- */
-router.get('/:jobId/candidate/:candidateId', function(req, res, next) {
-    let query = {"_id": ObjectId(req.params['candidateId'])};
-    req.users.findOne(query, function(err, doc){
-        if (err) next(err);
-        console.log(doc);
-        res.json(doc);
     });
 });
 
