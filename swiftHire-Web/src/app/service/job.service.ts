@@ -8,7 +8,7 @@ export class JobService {
   constructor(public http:Http) { }
 
   getAllNearJobs(lat: number, long: number) {
-    return this.http.get(AppConfig.BASE_URL + "jobs/");
+    return this.http.get(AppConfig.BASE_URL + "jobs/all");
   }
 
   postOneJob() {
