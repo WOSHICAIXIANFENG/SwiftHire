@@ -11,11 +11,6 @@ var router = express.Router();
  name: string,
  description: string,
  category:string,
-<<<<<<< HEAD
- location: [lat,long],
-=======
- location: [long, lat],
->>>>>>> 38728f402f0b383ccdda7e4d90e486fc3cec5008
  duration: number,// duration per hour
  hourFee: number,// hourly fees rate
  preferDate: date,//preferred date
@@ -52,7 +47,7 @@ var router = express.Router();
  RestAPI ------ job/choose ----- POST (jobId, candidateId)
 
 *
-* *
+* */
 
 /**
  * Test: get all jobs.
@@ -70,8 +65,10 @@ router.get('/all', function(req, res, next){
 router.get('/', function(req, res, next){
     let lat= parseFloat(req.query.lat);
     let long = parseFloat(req.query.long);
-    req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $maxDistance:500}}}).limit(10)
+    console.log("My coordenates are: "+ long +", "+ lat);
+    req.jobs.find({'location':{'$near':{$geometry:{type:"Point", coordinates:[-91.96811168, 41.00800019]}, $maxDistance:1000}}}).limit(10)
         .toArray(function(err, docArray){
+            console.log("Returning" + docArray);
         if (err) next(err);
         res.json(docArray);
     });
@@ -95,7 +92,6 @@ router.get('/:uerId/post', function(req, res, next) {
 router.get('/:uerId/apply', function(req, res, next) {
     let query = {"candidate": ObjectId(req.params['userId'])};
     req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
->>>>>>> 38728f402f0b383ccdda7e4d90e486fc3cec5008
         if (err) next(err);
         res.json(docArray);
     });
