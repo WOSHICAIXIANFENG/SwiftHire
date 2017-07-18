@@ -1,0 +1,22 @@
+<div class="container">
+<div class="col-md-8 col-md-offset-2">
+  <table class="table">
+    <tr class="row">
+        <th>Title</th>
+        <th>Hours</th>
+        <th>Payment Fee</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th></th>
+    </tr>
+    <tr class="row" *ngFor="let j of jobs">
+      <td>{{j.name}}</td>
+      <td>{{j.duration}}</td>
+      <td>{{j.hourFee}}</td>
+      <td>{{j.preferDate}}</td>
+      <td>{{j.preferTime}}</td>
+     <td><a [routerLink]="['jobs']" class="btn btn-primary">Details</a></td>
+    </tr>
+  </table>
+</div>
+</div>

@@ -8,18 +8,21 @@ import { UserService } from './service/user.service';
 
 import { AppComponent } from './app.component';
 import { ErrorComponent } from './error/error.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { WindowRef } from "app/WindowRef";
 
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorComponent
+    ErrorComponent,
+    JobsComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     myRoutes
   ],
-  providers: [JobService,UserService],
+  providers: [JobService,UserService,WindowRef],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
