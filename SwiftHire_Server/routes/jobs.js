@@ -54,16 +54,6 @@ var router = express.Router();
 *
 * *
 
-<<<<<<< HEAD
-=======
-// /**
-//  * Get all jobs ---- get query parameter location
-//  */
-// router.get('/', function(req, res, next){
-//     //var query =
-// });
->>>>>>> 38728f402f0b383ccdda7e4d90e486fc3cec5008
-
 /**
  * Test: get all jobs.
  */
