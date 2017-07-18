@@ -1,11 +1,33 @@
-<div class="container">
-<div class="col-md-8 col-md-offset-2">
-  <toolbar></toolbar>
-  <h1 class="display-1"><a [routerLink]="['jobs']">Go to jobs</a></h1>
-  <router-outlet></router-outlet>
-
-<hr>
-
-</div>
-</div>
+<div class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a [routerLink]="['']" class="navbar-brand">SwiftHire</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown"> Posted Jobs </a>
+            </li>
+             <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown"> Enrolled Jobs </a>
+            </li>  
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><toolbar></toolbar></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+        
+    <div class="container">
+        <div class="page-header" id="banner">
+          <div class="col-md-8 col-md-offset-2">
+            
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+    </div>
 
