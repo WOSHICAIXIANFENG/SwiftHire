@@ -12,7 +12,7 @@ var ObjectId = require('mongodb').ObjectID;
  name: string,
  description: string,
  category:string,
- location: [lat, long],
+ location: [long, lat],
  duration: number,// duration per hour
  hourFee: number,// hourly fees rate
  preferDate: date,//preferred date
@@ -51,12 +51,12 @@ var ObjectId = require('mongodb').ObjectID;
 *
 * */
 
-/**
- * Get all jobs ---- get query parameter location
- */
-router.get('/', function(req, res, next){
-    //var query =
-});
+// /**
+//  * Get all jobs ---- get query parameter location
+//  */
+// router.get('/', function(req, res, next){
+//     //var query =
+// });
 
 /**
  * Test: get all jobs.
@@ -72,9 +72,11 @@ router.get('/all', function(req, res, next){
  * Test: get 10 closest locations.
  */
 router.get('/', function(req, res, next){
-    let lat= req.query.lat;
-    let long = req.query.long;
-    req.jobs.find({$near:{$geometry:{location:[lat,long]},$maxDistance:1000}}).limit(10).toArray(function(err, docArray){
+    //!!! Note: Don't forget to parse coordinates to number
+    let lat= parseFloat(req.query.lat);
+    let long = parseFloat(req.query.long);
+    req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $maxDistance:500}}}).limit(10)
+        .toArray(function(err, docArray){
         if (err) next(err);
         res.json(docArray);
         res.status(200);
@@ -157,14 +159,16 @@ router.post('/', function(req, res, next){
  * Load some testing data
  */
 router.get('/init', function(req, res, next) {
-    let obj1 = {"_id":"1","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":[41.00800002,"-91.96811168"],"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"1"};
-    let obj2 = {"_id":"2","name":"Clean the restroom","description":"Wash my neigbours Ferrari","category":"Wash","location":[41.00800002,"-91.96811168"],"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"2"};
-    let obj3 = {"_id":"3","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":[41.00800002,"-91.96811168"],"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
-    let obj4 = {"_id":"4","name":"Wash Window","description":"Wash my neigbours Ferrari","category":"Wash","location":[41.00800002,"-91.96811168"],"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
+    req.jobs.createIndex({'location:':'2dsphere'});
+
+    let obj1 = {"_id":"1","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800002]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"1"};
+    let obj2 = {"_id":"2","name":"Clean the restroom","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800019]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"2"};
+    let obj3 = {"_id":"3","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811167,41.00800002]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
+    let obj4 = {"_id":"4","name":"Wash Window","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800001]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
 
     req.jobs.insertMany([obj1, obj2, obj3, obj4], function(err, insertData){
         if (err) next(err);
-        res.send("Insert Success");
+        return res.send("Insert Success");
     });
 });
 
