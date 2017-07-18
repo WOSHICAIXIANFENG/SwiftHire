@@ -10,6 +10,8 @@ import { AuthService } from './service/auth.service';
 
 import { AppComponent } from './app.component';
 import { ErrorComponent } from './error/error.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { WindowRef } from "app/WindowRef";
 import { CandidateComponent } from './component/candidate.component';
 import { CandidateItemComponent } from './component/candidate.item.component';
 import { CandidatesComponent } from './component/candidates.component';
@@ -26,6 +28,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   declarations: [
     AppComponent,
     ErrorComponent,
+    JobsComponent,
     CandidatesComponent,
     CandidateComponent,
     CandidateItemComponent,
@@ -37,7 +40,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     HttpModule,
     myRoutes
   ],
-  providers: [JobService,UserService, AuthService, {provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http, RequestOptions]}],
+  providers: [JobService,
+    UserService,
+    WindowRef,
+     AuthService,
+     {provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http, RequestOptions]}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
