@@ -153,6 +153,20 @@ router.post('/', function(req, res, next){
     })
 });
 
+/**
+ * Load some testing data
+ */
+router.get('/init', function(req, res, next) {
+    let obj1 = {"_id":"1","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":[41.00800002,"-91.96811168"],"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"1"};
+    let obj2 = {"_id":"2","name":"Clean the restroom","description":"Wash my neigbours Ferrari","category":"Wash","location":[41.00800002,"-91.96811168"],"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"2"};
+    let obj3 = {"_id":"3","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":[41.00800002,"-91.96811168"],"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
+    let obj4 = {"_id":"4","name":"Wash Window","description":"Wash my neigbours Ferrari","category":"Wash","location":[41.00800002,"-91.96811168"],"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
+
+    req.jobs.insertMany([obj1, obj2, obj3, obj4], function(err, insertData){
+        if (err) next(err);
+        res.send("Insert Success");
+    });
+});
 
 
 module.exports = router;

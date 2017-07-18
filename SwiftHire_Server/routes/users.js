@@ -25,21 +25,27 @@ const Rx = require('@reactivex/rxjs');
  * Load some testing data
  */
 router.get('/init', function(req, res, next) {
-    let obj1 = {"name": "dara",
+    let obj1 = {
+        "_id": 1,
+        "name": "dara",
         "password": "123456",
         "avatar": "http://localhost:4000/images/user3.png",
         "comments": [
             {"jobId": 1, "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
             {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
         ]};
-    let obj2 = {"name": "samuel",
+    let obj2 = {
+        "_id": 2,
+        "name": "samuel",
         "password": "123456",
         "avatar": "http://localhost:4000/images/user1.png",
         "comments": [
             {"jobId": 1, "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
             {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
         ]};
-    let obj3 = {"name": "diego",
+    let obj3 = {
+        "_id": 3,
+        "name": "diego",
         "password": "123456",
         "avatar": "http://localhost:4000/images/user2.png",
         "comments": [
@@ -47,16 +53,10 @@ router.get('/init', function(req, res, next) {
             {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
         ]};
 
-    req.users.insert(obj1, function(err, insertData){
-        if (err) next(err);
-    });
 
-    req.users.insert(obj2, function(err, insertData){
+    req.users.insertMany([obj1, obj2, obj3], function(err, insertData){
         if (err) next(err);
-    });
-
-    req.users.insert(obj3, function(err, insertData){
-        if (err) next(err);
+        res.send("Insert Success");
     });
 })
 
