@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  tempObj: any;
+
+  constructor() {
+    this.tempObj = {"_id":"1","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800002]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"1"};
+
+  }
+
 }
