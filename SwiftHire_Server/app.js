@@ -10,8 +10,16 @@ var db = mongo.db("mongodb://localhost:27017/SwiftHire", {native_parser:true});
 var index = require('./routes/index');
 var usersRouter = require('./routes/users');
 var jobRouter = require('./routes/jobs');
-
+var jwt = require('express-jwt');
+var cors = require('cors');
 var app = express();
+
+app.use(cors());
+
+var authCheck = jwt({
+  secret: new Buffer('gp37zq6_xriFoaLRKryicrHCPkVbzL22Ihr8se14aqevBOF3AhNEYMikVO8-LBwu', 'base64'),
+  audience: 'wPOJ2LiGIJgiiuqWnirTs2IIMd2q7Te9'
+});
 
 // view engine setup
 // templating library adapter for Express

@@ -12,7 +12,7 @@ const MY_ROUTES: Routes = [
      
      // ** for all routes that we don't recognize, 
      // Routes served from top to bottom so this should always come last!
-     { path: '**', redirectTo: 'error'}
+     { path: '**', redirectTo: '/'}
 ];
 
 export const myRoutes = RouterModule.forRoot(MY_ROUTES);
