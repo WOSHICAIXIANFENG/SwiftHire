@@ -11,7 +11,11 @@ var router = express.Router();
  name: string,
  description: string,
  category:string,
+<<<<<<< HEAD
  location: [lat,long],
+=======
+ location: [long, lat],
+>>>>>>> 38728f402f0b383ccdda7e4d90e486fc3cec5008
  duration: number,// duration per hour
  hourFee: number,// hourly fees rate
  preferDate: date,//preferred date
@@ -50,6 +54,15 @@ var router = express.Router();
 *
 * *
 
+<<<<<<< HEAD
+=======
+// /**
+//  * Get all jobs ---- get query parameter location
+//  */
+// router.get('/', function(req, res, next){
+//     //var query =
+// });
+>>>>>>> 38728f402f0b383ccdda7e4d90e486fc3cec5008
 
 /**
  * Test: get all jobs.
@@ -65,13 +78,34 @@ router.get('/all', function(req, res, next){
  * Test: get 10 closest locations.
  */
 router.get('/', function(req, res, next){
-    let lat= req.query.lat;
-    console.log('The latitude: '+lat);
-    let long = req.query.long;
-    let coords=[lat,long];
-    console.log('The longitude: '+long);
-    req.jobs.find({location:{ '$near': coords}}).limit(10).toArray(function(err, docArray){
-        console.log('here we are'+ docArray);
+    let lat= parseFloat(req.query.lat);
+    let long = parseFloat(req.query.long);
+    req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $maxDistance:500}}}).limit(10)
+        .toArray(function(err, docArray){
+        if (err) next(err);
+        res.json(docArray);
+    });
+});
+
+/**
+ *  Return all jobs I posted
+ */
+router.get('/:uerId/post', function(req, res, next) {
+    let query = {"owner": ObjectId(req.params['userId'])};
+    req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
+        if (err) next(err);
+        res.json(docArray);
+        res.status(200);
+    });
+});
+
+/**
+ *  Return all jobs I applied successfully
+ */
+router.get('/:uerId/apply', function(req, res, next) {
+    let query = {"candidate": ObjectId(req.params['userId'])};
+    req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
+>>>>>>> 38728f402f0b383ccdda7e4d90e486fc3cec5008
         if (err) next(err);
         res.json(docArray);
     });
@@ -101,6 +135,22 @@ router.post('/', function(req, res, next){
     })
 });
 
+/**
+ * Load some testing data
+ */
+router.get('/init', function(req, res, next) {
+    req.jobs.createIndex({'location:':'2dsphere'});
+
+    let obj1 = {"_id":"1","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800002]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"1"};
+    let obj2 = {"_id":"2","name":"Clean the restroom","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800019]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"2"};
+    let obj3 = {"_id":"3","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811167,41.00800002]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
+    let obj4 = {"_id":"4","name":"Wash Window","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800001]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
+
+    req.jobs.insertMany([obj1, obj2, obj3, obj4], function(err, insertData){
+        if (err) next(err);
+        return res.send("Insert Success");
+    });
+});
 
 
 module.exports = router;
