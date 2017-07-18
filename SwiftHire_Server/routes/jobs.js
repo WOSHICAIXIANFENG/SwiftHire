@@ -111,7 +111,7 @@ router.post('/', function(req, res, next){
         preferDate: req.body.preferDate,
         preferTime: req.body.preferTime,
         owner: req.body.owner,
-        candiate: null,
+        candidate: null,
         waitingList: []
     };
 
