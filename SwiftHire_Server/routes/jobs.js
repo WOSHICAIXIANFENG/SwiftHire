@@ -3,7 +3,6 @@
  */
 var express = require('express');
 var router = express.Router();
-var ObjectId = require('mongodb').ObjectID;
 
 /*
 *
@@ -12,17 +11,17 @@ var ObjectId = require('mongodb').ObjectID;
  name: string,
  description: string,
  category:string,
- location: [lat, long],
+ location: [lat,long],
  duration: number,// duration per hour
  hourFee: number,// hourly fees rate
  preferDate: date,//preferred date
  preferTime: time, // preferred time.
  owner: userId,
- candidate: anotherUserId,
+ candiate: anotherUserId,
  available: boolean, // true --- is aviable for all users, false --- when the owner already picked one candidate. or job expired
  waitingList:[
  {userId},
- {userId}
+ 
  ]
  }
 
@@ -36,27 +35,21 @@ var ObjectId = require('mongodb').ObjectID;
  preferTime: time, // preferred time.
  }
 
- RestAPI ------ jobs/   ------ GET (location parameter)  ----- return all nearby jobs.
+ RestAPI ------ job/   ------ GET (location parameter)  ----- return all nearby jobs.
 
- RestAPI ------ jobs/post  ------ Post (form paramters)---- create a job.
- RestAPI ------ jobs/apply ----- POST (jobId, candidateId) ---- Enroll to one job.
+ RestAPI ------ job/post  ------ Post (form paramters)---- create a job.
+ RestAPI ------ job/apply ----- POST (jobId, candidateId) ---- Enroll to one job.
 
- RestAPI ------ jobs/:uerId/post ------ Get -------  Return all jobs I posted
- RestAPI ------ jobs/:uerId/apply ------ Get -------  Return all jobs I applied for.
+ RestAPI ------ user/:uerId/job/post ------ Get -------  Return all jobs I posted
+ RestAPI ------ user/:uerId/job/apply ------ Get -------  Return all jobs I applyed for.
 
- RestAPI ------ jobs/:jobId/candidate ----- Get (path parameter:jobId) ----  return all candidate with detail info.
- RestAPI ------ jobs/:jobId/candidate/:candidateId ----  See candidate's profile info.
- RestAPI ------ jobs/choose ----- POST (jobId, candidateId)
+ RestAPI ------ job/:jobId/candidate ----- Get (path parameter:jobId) ----  return all canidate with detail infor.
+ RestAPI ------ job/:jobId/candidate/:candiateId ----  See candidate's profile info.
+ RestAPI ------ job/choose ----- POST (jobId, candidateId)
 
 *
-* */
+* *
 
-/**
- * Get all jobs ---- get query parameter location
- */
-router.get('/', function(req, res, next){
-    //var query =
-});
 
 /**
  * Test: get all jobs.
@@ -73,59 +66,14 @@ router.get('/all', function(req, res, next){
  */
 router.get('/', function(req, res, next){
     let lat= req.query.lat;
+    console.log('The latitude: '+lat);
     let long = req.query.long;
-    req.jobs.find({$near:{$geometry:{location:[lat,long]},$maxDistance:1000}}).limit(10).toArray(function(err, docArray){
+    let coords=[lat,long];
+    console.log('The longitude: '+long);
+    req.jobs.find({location:{ '$near': coords}}).limit(10).toArray(function(err, docArray){
+        console.log('here we are'+ docArray);
         if (err) next(err);
         res.json(docArray);
-        res.status(200);
-    });
-});
-
-/**
- *  Return all jobs I posted
- */
-router.get('/:uerId/post', function(req, res, next) {
-    let query = {"owner": ObjectId(req.params['userId'])};
-    req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
-        if (err) next(err);
-        res.json(docArray);
-        res.status(200);
-    });
-});
-
-/**
- *  Return all jobs I applied successfully
- */
-router.get('/:uerId/apply', function(req, res, next) {
-    let query = {"candidate": ObjectId(req.params['userId'])};
-    req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
-        if (err) next(err);
-        res.json(docArray);
-        res.status(200);
-    });
-});
-
-/**
- * Get all candidates for this job
- */
-router.get('/:jobId/candidate', function(req, res, next) {
-    let query = {"_id": ObjectId(req.params['jobId'])};
-    req.jobs.findOne(query, function(err, doc){
-        if (err) next(err);
-        console.log(doc.waitingList);
-        res.json(doc.waitingList);
-    });
-});
-
-/**
- * Get one candidate's detail information
- */
-router.get('/:jobId/candidate/:candidateId', function(req, res, next) {
-    let query = {"_id": ObjectId(req.params['candidateId'])};
-    req.users.findOne(query, function(err, doc){
-        if (err) next(err);
-        console.log(doc);
-        res.json(doc);
     });
 });
 
