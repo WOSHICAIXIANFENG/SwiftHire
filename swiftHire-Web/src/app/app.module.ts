@@ -1,18 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { JobService } from './service/job.service';
-import { UserService } from './service/user.service';
 import { HttpModule} from '@angular/http';
 
+import { myRoutes } from "./app.routes";
+import { JobService } from './service/job.service';
+import { UserService } from './service/user.service';
+
 import { AppComponent } from './app.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    myRoutes
   ],
   providers: [JobService,UserService],
   bootstrap: [AppComponent]
