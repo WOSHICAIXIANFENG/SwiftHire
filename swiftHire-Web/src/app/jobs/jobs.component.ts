@@ -13,8 +13,12 @@ export class JobsComponent implements OnInit {
   constructor(private jobService:JobService, private window: WindowRef) {
    //this.window.nativeWindow.getPosition();
    this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
-        this.jobService.getAllNearJobs(success.coords.latitude,success.coords.longitude).subscribe(resp=>{  
-                            this.jobs=resp;
+        let lat=success.coords.latitude;
+        let long=success.coords.longitude;
+        console.log('Coordinates: lat- '+lat +", long- "+long);
+        this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{  
+          console.log(resp);                  
+          this.jobs=resp;
         },
          error=>{
               console.log('This shit doesnt work');
