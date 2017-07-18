@@ -15,7 +15,6 @@ export class JobsComponent implements OnInit {
    this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
         let lat=success.coords.latitude;
         let long=success.coords.longitude;
-        console.log('Coordinates: lat- '+lat +", long- "+long);
         this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{  
           console.log(resp);                  
           this.jobs=resp;

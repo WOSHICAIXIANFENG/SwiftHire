@@ -17,6 +17,7 @@ import { CandidateItemComponent } from './component/candidate.item.component';
 import { CandidatesComponent } from './component/candidates.component';
 import { CommentComponent } from './component/comment.component';
 import { ToolbarComponent} from './components/toolbar.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -33,7 +34,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     CandidateComponent,
     CandidateItemComponent,
     CommentComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    JobDetailsComponent
   ],
   imports: [
     BrowserModule,
