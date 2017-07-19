@@ -15,6 +15,7 @@ import { Subscription } from "rxjs/Rx";
             <th>Date</th>
             <th>Time</th>
             <th></th>
+            <th></th>
           </tr>
           <tr class="row" *ngFor="let j of jobs">
             <td>{{j.name}}</td>
@@ -26,10 +27,10 @@ import { Subscription } from "rxjs/Rx";
             <td><a [routerLink]="['candidates']" [queryParams]="{jobId: j._id}" class="btn btn-primary">Candidates</a></td>
           </tr>
         </table>
+
+        <router-outlet></router-outlet>
       </div>
     </div>
-
-    <router-outlet></router-outlet>
   `
 })
 
