@@ -32,8 +32,32 @@ export class JobService {
 
   }
 
-  applyOneJob() {
+  /**
+   * Function to choose one candidate
+   * @param candidateId
+   * @param jobId
+   * @returns {Observable<Response>}
+   */
+  pickCandidateForJob(candidateId:string, jobId:string) {
+    let body = {
+      "candidateId":candidateId,
+      "jobId":jobId
+    }
+    return this.http.post(AppConfig.BASE_URL + "jobs/choose", body);
+  }
 
+  /**
+   * Function to apply one job
+   * @param candidateId
+   * @param jobId
+   * @returns {Observable<Response>}
+   */
+  applyOneJob(candidateId:string, jobId:string) {
+    let body = {
+      "candidateId":candidateId,
+      "jobId":jobId
+    }
+    return this.http.post(AppConfig.BASE_URL + "jobs/apply", body);
   }
 
   /**

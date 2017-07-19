@@ -4,9 +4,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class MyCanActivateGuard implements CanActivate {
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     console.log(route);

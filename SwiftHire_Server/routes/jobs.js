@@ -156,6 +156,61 @@ router.get('/:jobId/candidate', function(req, res, next) {
     });
 });
 
+/**
+ * Choose candidate for one job
+ */
+router.post('/choose', function(req, res, next){
+    var candidateId = req.body.candidateId;
+    var jobId = req.body.jobId;
+    //console.log("Samuel Test userId 9999 candidateId = " + candidateId + " , jobId = " + jobId);
+
+    let query = {_id: jobId};
+    let operate = {$set: {waitingList: [], candidate:candidateId } };
+    req.jobs.update(query, operate, function (err, data) {
+        if (err) next(err);
+        //console.log(data);
+        res.json({status: "success"});
+    });
+
+    // req.users.find({_id: candidateId + ""}).toArray(function(err, docArray){
+    //     if (err) next(err);
+    //     //console.log("Samuel Test userId 9999 doc = " + docArray);
+    //     if (docArray && docArray.length > 0) {
+    //         let candidate = docArray[0];
+    //         let query = {_id: jobId};
+    //         let operate = {$push: {waitingList: candidate } };
+    //         req.jobs.update(query, operate, function (err, data) {
+    //             if (err) next(err);
+    //             //console.log(data);
+    //             res.json({status: "success"});
+    //         });
+    //     }
+    // });
+});
+
+
+/**
+ * Apply for one job
+ */
+router.post('/apply', function(req, res, next){
+    var candidateId = req.body.candidateId;
+    var jobId = req.body.jobId;
+    //console.log("Samuel Test userId 9999 candidateId = " + candidateId + " , jobId = " + jobId);
+    req.users.find({_id: candidateId + ""}).toArray(function(err, docArray){
+        if (err) next(err);
+        //console.log("Samuel Test userId 9999 doc = " + docArray);
+        if (docArray && docArray.length > 0) {
+            let candidate = docArray[0];
+            let query = {_id: jobId};
+            let operate = {$push: {waitingList: candidate } };
+            req.jobs.update(query, operate, function (err, data) {
+                if (err) next(err);
+                //console.log(data);
+                res.json({status: "success"});
+            });
+        }
+    });
+});
 
 /**
  * Add one job
