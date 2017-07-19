@@ -1,15 +1,14 @@
 <div class="container">
- <div class="collapse navbar-collapse">
   <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="navbar-form navbar-left" role="search">
     <div class="navbar-collapse">
     <div class="form-group">
     <ul class="nav navbar-nav">
       <li><label class="label-control">
-        <input type="radio" value="fee" name="filter" formControlName="filter" checked>     
+        <input type="radio" value="fee" name="filter" formControlName="filter" checked/>     
         Fee
       </label></li>
       <li><label class="label-control">
-        <input type="radio" value="category" name="filter" formControlName="filter">     
+        <input type="radio" value="category" name="filter" formControlName="filter"/>     
         Category
       </label></li> 
       </ul>
@@ -19,17 +18,17 @@
             <input type="text" class="form-control" formControlName="search" placeholder="Search">
     </div>
     <ng-template #categories>
-            <select class="form-control" formControlName="dropList">
-              <option *ngFor="let c of categoryList" [value]="c">{{c}}</option>
-            </select>
-      </ng-template>
+        <select class="form-control" formControlName="dropList">
+           <option *ngFor="let c of categoryList" [value]="c">{{c}}</option>
+        </select>
+    </ng-template>
     </div>
       <button type="submit" [disabled]="!searchForm.valid" class="btn btn-primary">Search</button>
     </div>
     </form>
- </div> 
-<div class="col-md-8">
-  <h1 class="display-2">Job Offers</h1>
+
+  <br><br>
+  <h1 class="text-center">Job Offers</h1>
   <div *ngIf="searched">
     <table class="table table-stripped">
     <thead>
@@ -46,7 +45,7 @@
       <td>{{j.name}}</td>
       <td>{{j.duration}}</td>
       <td>{{j.hourFee}}</td>
-      <td>{{j.preferDate}}</td>
+      <td>{{j.preferDate | date:"MM-dd-yyyy"}}</td>
       <td>{{j.preferTime}}</td>
      <td><a [routerLink]="['details']" class="btn btn-primary" (click)="select(j._id)">Details</a></td>
     </tr>
@@ -68,15 +67,13 @@
       <td>{{j.name}}</td>
       <td>{{j.duration}}</td>
       <td>{{j.hourFee}}</td>
-      <td>{{j.preferDate}}</td>
+      <td>{{j.preferDate | date:"MM-dd-yyyy"}}</td>
       <td>{{j.preferTime}}</td>
      <td><a  class="btn btn-primary" (click)="selectedData=j" >Details</a></td>
     </tr>
     </table>
   </div>
-</div>
-  <div class="col-md-8">
+  
     <router-outlet></router-outlet>
     <app-job-details *ngIf="selectedData" [data]="selectedData"></app-job-details>
-  </div>
-</div>
+</div>  

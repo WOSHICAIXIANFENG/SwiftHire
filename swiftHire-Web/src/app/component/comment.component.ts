@@ -7,8 +7,8 @@ import { Component, OnInit, Output, Input } from '@angular/core';
   selector: 'comment',
   template:`  
     <div>
-      <span>{{item.content}}</span>
-      <span>{{item.date }}</span>
+      <span class="col-md-6">{{item.content}}</span>
+      <span class="col-md-4">{{item.date }}</span>
       <span>{{item.rate}}</span>
     </div>
   `,

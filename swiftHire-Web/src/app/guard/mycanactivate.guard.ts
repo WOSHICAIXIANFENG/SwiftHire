@@ -12,7 +12,7 @@ export class MyCanActivateGuard implements CanActivate {
     // check token from local Storage
     var token = localStorage.getItem("token");
     if (!token) {
-       var result = confirm('Are you sure you have login ?');
+       var result = confirm('Are you sure you have logged in?');
        this.router.navigate(['error']);
     }
 

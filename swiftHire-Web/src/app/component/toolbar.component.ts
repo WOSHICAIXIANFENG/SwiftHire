@@ -6,10 +6,10 @@ import { AuthService } from '../service/auth.service';
   selector: 'toolbar',
   template: `
     <div class="toolbar">
-      <button (click)="auth.login()" *ngIf="!auth.loggedIn()">
+      <button class="glyphicon glyphicon-log-in" style="margin-top:10px; padding-top:5px; padding-bottom:5px;" (click)="auth.login()" *ngIf="!auth.loggedIn()">
         Login
       </button>
-      <button (click)="auth.logout()" *ngIf="auth.loggedIn()">
+      <button class="glyphicon glyphicon-log-out" style="margin-top:10px; padding-top:5px; padding-bottom:5px;" (click)="auth.logout()" *ngIf="auth.loggedIn()">
         Logout
       </button>
     </div>

@@ -24,11 +24,18 @@ export class UserService {
     return this.http.get(AppConfig.BASE_URL + "users/" + userId);
   }
 
-  addCommentForOwner(content:string, date:string) {
+  /**
+   * Add comment for Owner
+   * @returns {Observable<Response>}
+   */
+  addCommentForOwner(content:string, date:string, rate:string, jobId:string, jobOwner:string, jobOwnerId:string) {
     return this.http.post(AppConfig.BASE_URL + "users/", {
       "content": content,
-      "date": date
-      // todo
+      "date": date,
+      "rate": rate,
+      "jobOwner": jobOwner,
+      "jobId": jobId,
+      "jobOwnerId":jobOwnerId
     });
   }
 }
