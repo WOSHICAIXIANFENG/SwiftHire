@@ -23,11 +23,11 @@ import { Subscription } from "rxjs/Rx";
             <td>{{j.hourFee}}</td>
             <td>{{j.preferDate}}</td>
             <td>{{j.preferTime}}</td>
-            <td><a class="btn btn-primary" (click)="selectedData=j">Details</a></td>
-            <td><a [routerLink]="['candidates']" [queryParams]="{jobId: j._id}" class="btn btn-primary">Candidates</a></td>
+            <td><a class="btn btn-primary" (click)="selectedData=j;hideFlag=false;">Details</a></td>
+            <td><a [routerLink]="['candidates']" [queryParams]="{jobId: j._id}" class="btn btn-primary" (click)="onBtnClick()">Candidates</a></td>
           </tr>
         </table>
-        <app-job-details *ngIf="selectedData" [data]="selectedData"></app-job-details>
+        <app-job-details *ngIf="selectedData && !hideFlag" [data]="selectedData"></app-job-details>
         <router-outlet></router-outlet>
       </div>
     </div>
@@ -36,10 +36,15 @@ import { Subscription } from "rxjs/Rx";
 
 export class JobsPostedComponent implements OnInit,OnDestroy {
   jobs: any;
-  selectedData;  
+  selectedData;
+  hideFlag:boolean;
   private subscription: Subscription;
 
   constructor(private jobService:JobService) {}
+
+  onBtnClick() {
+    this.hideFlag = true;
+  }
 
   ngOnInit() {
     // try to get my userId from localstorage.
