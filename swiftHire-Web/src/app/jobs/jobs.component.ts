@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, EventEmitter } from '@angular/core';
 import { WindowRef } from '../WindowRef';
 import { JobService } from "app/service/job.service";
 
@@ -10,13 +10,14 @@ import { JobService } from "app/service/job.service";
 })
 export class JobsComponent implements OnInit {
   jobs;
+  onSelected:EventEmitter<any>;
+
   constructor(private jobService:JobService, private window: WindowRef) {
-   //this.window.nativeWindow.getPosition();
+   this.onSelected=new EventEmitter();
    this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
         let lat=success.coords.latitude;
         let long=success.coords.longitude;
-        this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{  
-          console.log(resp);                  
+        this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{               
           this.jobs=resp;
         },
          error=>{
@@ -27,6 +28,17 @@ export class JobsComponent implements OnInit {
           });
    }
 
+   select(jobId:string){
+     console.log('On select event: '+ jobId.toString());
+     for(let job of this.jobs){
+       console.log(job._id);
+       if(jobId.toString() == job._id){
+         console.log("=====");
+          this.jobService.selectJob(job._id);
+       } 
+     }
+     
+   }
    
 
   ngOnInit() {

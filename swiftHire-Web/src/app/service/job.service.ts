@@ -1,12 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import { AppConfig } from '../AppConfig';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class JobService {
+  selectedJob: EventEmitter<number>;
+  constructor(public http:Http) {
+    this.selectedJob=new EventEmitter();
+   }
 
-  constructor(public http:Http) { }
+   selectJob(job:number){
+     console.log('The object to emit is: '+job);
+      this.selectedJob.emit(job);
+       console.log("selectJOb");
+   }
 
   getAllNearJobs(lat: number, long: number) {
     return this.http.get(AppConfig.BASE_URL + "jobs/?lat="+lat+"&long="+long)
