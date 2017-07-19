@@ -7,7 +7,7 @@ import { Component, OnInit, Output, Input } from '@angular/core';
   selector: 'candidate-item',
   template:`  
     <div>
-      <img [src]="item.avatar"/> <span>{{item.name}}</span><span>{{item.avergeRate}}</span>
+      <img [src]="item.avatar" class="img-circle" width="125" height="125" title="{{item.name}}"/> <span><b style="font-size:25px; padding-left:50px; padding-right:120px;">{{item.name}}</b></span><span>{{item.avergeRate}}</span>
       <a [routerLink]="['candidates', 'detail']" [queryParams]="{id: item._id}">Detail</a>
     </div>
   `,
