@@ -34,9 +34,8 @@ export class RateCommentComponent implements OnDestroy {
     let date = new Date().toString();
     let rate = this.myForm.controls['rate'].value;
     let content = this.myForm.controls['content'].value;
-    let jobId = 2;
-    let jobOwner = "Hello";
-    this.subscription = this.userService.addCommentForOwner(content, date, rate, jobId, jobOwner).subscribe(resp=>{
+    
+    this.subscription = this.userService.addCommentForOwner(content, date, rate).subscribe(resp=>{
         this.jobObj=resp;
       },
       error=>{
