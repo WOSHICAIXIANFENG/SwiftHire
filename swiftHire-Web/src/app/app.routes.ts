@@ -10,9 +10,9 @@ import { RateCommentComponent } from './component/ratecomment.component';
 
 
 const MY_ROUTES: Routes = [
-    { path: '', redirectTo: 'jobs', pathMatch: 'full' }, 
+    { path: '', redirectTo: 'jobs', pathMatch: 'full' },
     { path: 'jobs', component: JobsComponent,children:[
-        { path: 'details', component: JobDetailsComponent },   
+        { path: 'details', component: JobDetailsComponent },
     ]},
      { path: 'error', component: ErrorComponent },
      // A redirect route requires a pathMatch property to tell the router how to match a URL to the path of a route.
@@ -24,10 +24,12 @@ const MY_ROUTES: Routes = [
       { path: 'candidates', component: CandidatesComponent, children:[
         {path: 'detail', component: CandidateComponent}
       ]},
+      { path: 'details', component: JobDetailsComponent }
     ]},
 
     { path: 'jobs/enrolled', component: JobsEnrolledComponent, children:[
-        {path: 'addcomment', component: RateCommentComponent}
+        {path: 'addcomment', component: RateCommentComponent},
+        { path: 'details', component: JobDetailsComponent }
     ]},
 
      // ** for all routes that we don't recognize,
