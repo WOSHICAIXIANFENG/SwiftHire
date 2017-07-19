@@ -34,7 +34,21 @@ export class JobService {
     return this.http.get(AppConfig.BASE_URL + "jobs/" + userId + "/post");
   }
 
+  /**
+   * Get candidate list for one job
+   * @param jobId
+   * @returns {Observable<Response>}
+   */
   getCandidateList(jobId: any) {
     return this.http.get(AppConfig.BASE_URL + "jobs/" + jobId + "/candidate");
+  }
+
+  /**
+   * Function to get all posted jobs by userId
+   * @param userId
+   * @returns {Observable<Response>}
+   */
+  getJobsEnrolled(userId: any) {
+    return this.http.get(AppConfig.BASE_URL + "jobs/" + userId + "/apply");
   }
 }

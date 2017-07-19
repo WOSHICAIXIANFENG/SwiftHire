@@ -89,11 +89,13 @@ router.get('/:userId/post', function(req, res, next) {
 });
 
 /**
- *  Return all jobs I applied successfully
+ *  Return all jobs I enrolled ---- apply success or still in waitlist
  */
 router.get('/:uerId/apply', function(req, res, next) {
-    let query = {"candidate": ObjectId(req.params['userId'])};
-    req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
+    let userId = req.params['userId'];
+    let query1 = {"candidate": userId};
+    let query2 = {"candidate": null, "waitingList": {$elemMatch:{"_id": userId}, "$exists": true, $ne: [] }};
+    req.jobs.find({$or:[query1, query2]}).sort("preferDate", 1).toArray(function(err, docArray){
         if (err) next(err);
         res.json(docArray);
     });

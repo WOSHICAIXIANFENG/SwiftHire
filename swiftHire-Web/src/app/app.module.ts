@@ -20,7 +20,10 @@ import { CommentComponent } from './component/comment.component';
 import { ToolbarComponent} from './components/toolbar.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { JobsPostedComponent } from './component/jobsposted.component';
+import { JobsEnrolledComponent } from './component/jobenrolled.component';
 import { RateCommentComponent } from './component/ratecomment.component';
+import { ChosenPipe } from './pipe/chosenpipe.pipe';
+import { WaitPipe } from './pipe/waitpipe.pipe';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -40,7 +43,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ToolbarComponent,
     JobDetailsComponent,
     JobsPostedComponent,
-    RateCommentComponent
+    JobsEnrolledComponent,
+    RateCommentComponent,
+
+    ChosenPipe,
+    WaitPipe
   ],
   imports: [
     BrowserModule,
