@@ -23,10 +23,13 @@ import { Subscription } from "rxjs/Rx";
             <td>{{j.preferDate}}</td>
             <td>{{j.preferTime}}</td>
             <td><a [routerLink]="['jobs']" class="btn btn-primary">Details</a></td>
+            <td><a [routerLink]="['candidates']" [queryParams]="{jobId: j._id}" class="btn btn-primary">Candidates</a></td>
           </tr>
         </table>
       </div>
     </div>
+    
+    
   `
 })
 
@@ -44,7 +47,7 @@ export class JobsPostedComponent implements OnInit,OnDestroy {
 
     this.subscription = this.jobService.getJobsPosted(ownderId).subscribe(resp=>{
         //console.log(resp);
-        this.jobs=resp;
+        this.jobs=resp.json();
       },
       error=>{
         console.log('This doesnt work');

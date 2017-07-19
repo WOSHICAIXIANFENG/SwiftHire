@@ -2,7 +2,9 @@
  * Created by Samuel on 18/7/2017.
  */
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { JobService } from '../service/job.service';
+import { Subscription } from "rxjs/Rx";
 
 @Component({
   selector: 'candidate-list',
@@ -19,8 +21,22 @@ import { JobService } from '../service/job.service';
 export class CandidatesComponent implements OnInit,OnDestroy {
   @Input() candidates:any;
 
-  constructor(private jobService: JobService) {
+  private subscription: Subscription;
 
+  constructor(private jobService: JobService, private activatedRoute: ActivatedRoute,) {
+    this.subscription = activatedRoute.queryParams.subscribe(
+      (param: any) => {
+        let jobId = param['jobId'];
+        console.log("------- jobId = " + jobId);
+        this.subscription = this.jobService.getCandidateList(jobId).subscribe(resp=>{
+            console.log(resp);
+            this.candidates = resp.json().waitingList;
+          },
+          error=>{
+            console.log('This doesnt work');
+          },()=>{});
+      }
+    );
   }
 
   ngOnInit() {
@@ -28,6 +44,6 @@ export class CandidatesComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy() {
-
+    this.subscription.unsubscribe();
   }
 }

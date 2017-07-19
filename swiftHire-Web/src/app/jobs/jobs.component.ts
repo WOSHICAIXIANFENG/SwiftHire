@@ -15,8 +15,8 @@ export class JobsComponent implements OnInit {
    this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
         let lat=success.coords.latitude;
         let long=success.coords.longitude;
-        this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{  
-          console.log(resp);                  
+        this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{
+          console.log(resp);
           this.jobs=resp;
         },
          error=>{
@@ -26,8 +26,6 @@ export class JobsComponent implements OnInit {
               alert('We are sorry your browser does not support geolocation detection');
           });
    }
-
-   
 
   ngOnInit() {
   }
