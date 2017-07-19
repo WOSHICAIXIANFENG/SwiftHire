@@ -96,14 +96,14 @@ router.post('/', function (req, res, next) {
         date: req.body.date,
         rate: req.body.rate,
         jobId: req.body.jobId,
-        jobOwner: req.body.jobOwner
+        jobOwner: req.body.jobOwnerName
     };
 
-    let owner = req.body.jobOwner;
+    let owner = req.body.jobOwnerId;
     let query = {_id: owner};
     let operate = {$push: { comments: obj } };
     req.users.update(query, operate, function (err, data) {
-        if (error) next(error);
+        if (err) next(err);
         //console.log(data);
         res.json({status:"success"});
     });

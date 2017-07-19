@@ -47,17 +47,30 @@ export class RateCommentComponent implements OnDestroy {
   }
 
   onSubmit() {
-    let date = new Date().toString();
-    let rate = this.myForm.controls['rate'].value;
-    let content = this.myForm.controls['content'].value;
-    
-    this.subscription = this.userService.addCommentForOwner(content, date, rate).subscribe(resp=>{
-        this.jobObj=resp;
+    var mydate = new Date();
+    var curr_date = mydate.getDate();
+    var curr_month = mydate.getMonth();
+    var curr_year = mydate.getFullYear();
+    var date = curr_month + "/" + curr_date + "/" + curr_year;
+
+    var rate = this.myForm.controls['rate'].value;
+    var content = this.myForm.controls['content'].value;
+    var jobId = this.jobId;
+
+    this.userService.getUserDetail(this.jobObj.owner).subscribe(resp => {
+        let jobOwner = resp.json().name;
+        this.subscription = this.userService.addCommentForOwner(content, date, rate, jobId, jobOwner,this.jobObj.owner).subscribe(resp=>{
+            this.myForm.reset();
+          },
+          error=>{
+            console.log('This doesnt work');
+          },()=>{});
       },
       error=>{
         console.log('This doesnt work');
       },()=>{});
-    console.log(this.myForm);
+
+    console.log(this.myForm.value);
   }
 
   ngOnDestroy() {
