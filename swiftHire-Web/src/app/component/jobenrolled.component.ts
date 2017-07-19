@@ -24,7 +24,7 @@ import { Subscription } from "rxjs/Rx";
             <td>{{j.preferDate}}</td>
             <td>{{j.preferTime}}</td>
             <td><a [routerLink]="['jobs']" class="btn btn-primary">Details</a></td>
-            <td *ngIf="checkIfJobStart()"><a [routerLink]="['candidates']" [queryParams]="{jobId: j._id}" class="btn btn-primary">Add Comment</a></td>
+            <td *ngIf="checkIfJobStart()"><a [routerLink]="['addcomment']" [queryParams]="{jobId: j._id}" class="btn btn-primary">Add Comment</a></td>
           </tr>
 
           <tr class="row" *ngFor="let j of jobs | waitpipe">
@@ -39,6 +39,7 @@ import { Subscription } from "rxjs/Rx";
       </div>
     </div>
     
+    <router-outlet></router-outlet>
     
   `
 })

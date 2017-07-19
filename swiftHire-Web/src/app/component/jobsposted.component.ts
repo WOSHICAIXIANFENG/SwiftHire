@@ -28,8 +28,8 @@ import { Subscription } from "rxjs/Rx";
         </table>
       </div>
     </div>
-    
-    
+
+    <router-outlet></router-outlet>
   `
 })
 
