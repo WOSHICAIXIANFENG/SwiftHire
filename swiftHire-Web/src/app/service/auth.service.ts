@@ -37,16 +37,13 @@ export class AuthService {
  }
 
  logout() {
-   // To log out, we just need to remove
-   // the user's profile and token
-   localStorage.removeItem('profile');
-//    localStorage.removeItem('id_token');
+    // To log out, we just need to remove
+    // the user's profile and token
+    localStorage.removeItem('profile');
     localStorage.removeItem('token');
  }
 
  loggedIn(): boolean {
-     console.log('--------------------- Hello');
-     console.log(tokenNotExpired());
     return tokenNotExpired();
  }
 }
