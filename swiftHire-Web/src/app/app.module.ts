@@ -17,7 +17,7 @@ import { CandidateComponent } from './component/candidate.component';
 import { CandidateItemComponent } from './component/candidate.item.component';
 import { CandidatesComponent } from './component/candidates.component';
 import { CommentComponent } from './component/comment.component';
-import { ToolbarComponent} from './components/toolbar.component';
+import { ToolbarComponent} from './component/toolbar.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { JobsPostedComponent } from './component/jobsposted.component';
 import { JobsEnrolledComponent } from './component/jobenrolled.component';
