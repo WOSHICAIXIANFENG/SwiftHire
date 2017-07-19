@@ -35,12 +35,12 @@ export class JobService {
    * @param jobId
    * @returns {Observable<Response>}
    */
-  applyOneJob(candidateId:string, jobId:string) {
+  pickCandidateForJob(candidateId:string, jobId:string) {
     let body = {
       "candidateId":candidateId,
       "jobId":jobId
     }
-    return this.http.post(AppConfig.BASE_URL + "jobs/apply", body);
+    return this.http.post(AppConfig.BASE_URL + "jobs/choose", body);
   }
 
   /**

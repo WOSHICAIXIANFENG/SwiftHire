@@ -49,7 +49,7 @@ export class CandidateItemComponent implements OnInit {
     if (result) {
       // if user choose 'OK'.
       // call API to appy this job.
-      this.jobService.applyOneJob(candidateId, this.jobId).subscribe(
+      this.jobService.pickCandidateForJob(candidateId, this.jobId).subscribe(
         res => {
           //console.log("res == " + res);
           // navigate to home page
