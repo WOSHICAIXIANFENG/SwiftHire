@@ -27,9 +27,8 @@ export class CandidatesComponent implements OnInit,OnDestroy {
     this.subscription = activatedRoute.queryParams.subscribe(
       (param: any) => {
         let jobId = param['jobId'];
-        console.log("------- jobId = " + jobId);
         this.subscription = this.jobService.getCandidateList(jobId).subscribe(resp=>{
-            console.log(resp);
+            //console.log(resp);
             this.candidates = resp.json().waitingList;
           },
           error=>{
