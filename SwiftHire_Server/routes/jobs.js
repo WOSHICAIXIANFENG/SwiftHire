@@ -75,15 +75,49 @@ router.get('/', function(req, res, next){
     });
 });
 
-router.get('/:id', function(req, res, next){
-    let query={_id: ObjectId(req.params['id'])};
-    req.jobs.findOne(query,function(err, docArray){
+
+/**
+ * Test: get jobs by minimum fee.
+ */
+router.get('/fee/:fee', function(req, res, next){
+    let fee= (req.params['fee']).toString();
+    let date= new Date();
+    req.jobs.find({'hourFee':{$gte: fee},'preferDate':{$gt:date}})
+        .toArray(function(err, docArray){
             console.log("Returning" + docArray);
         if (err) next(err);
         res.json(docArray);
     });
 });
 
+/**
+ * Test: get jobs by category.
+ */
+router.get('/category/:category', function(req, res, next){
+    let cat= req.params['category'];
+    let date=new Date();
+    req.jobs.find({'category':/cat/,'preferDate':{$gt:date}})
+        .toArray(function(err, docArray){
+            console.log("Returning" + docArray);
+        if (err) next(err);
+        res.json(docArray);
+    });
+});
+
+
+/**
+ * Test: get jobs by location.
+ */
+router.get('/location/:location', function(req, res, next){
+    let lat= parseFloat(req.query.lat);
+    let long = parseFloat(req.query.long);
+    req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $minDistance:100}}}).limit(10)
+        .toArray(function(err, docArray){
+            console.log("Returning" + docArray);
+        if (err) next(err);
+        res.json(docArray);
+    });
+});
 
 /**
  *  Return all jobs I posted
@@ -137,7 +171,7 @@ router.post('/choose', function(req, res, next){
         //console.log(data);
         res.json({status: "success"});
     });
-    
+
     // req.users.find({_id: candidateId + ""}).toArray(function(err, docArray){
     //     if (err) next(err);
     //     //console.log("Samuel Test userId 9999 doc = " + docArray);
@@ -154,6 +188,29 @@ router.post('/choose', function(req, res, next){
     // });
 });
 
+
+/**
+ * Apply for one job
+ */
+router.post('/apply', function(req, res, next){
+    var candidateId = req.body.candidateId;
+    var jobId = req.body.jobId;
+    //console.log("Samuel Test userId 9999 candidateId = " + candidateId + " , jobId = " + jobId);
+    req.users.find({_id: candidateId + ""}).toArray(function(err, docArray){
+        if (err) next(err);
+        //console.log("Samuel Test userId 9999 doc = " + docArray);
+        if (docArray && docArray.length > 0) {
+            let candidate = docArray[0];
+            let query = {_id: jobId};
+            let operate = {$push: {waitingList: candidate } };
+            req.jobs.update(query, operate, function (err, data) {
+                if (err) next(err);
+                //console.log(data);
+                res.json({status: "success"});
+            });
+        }
+    });
+});
 
 /**
  * Add one job
