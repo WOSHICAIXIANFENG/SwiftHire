@@ -17,7 +17,8 @@ export class JobsComponent implements OnInit {
    this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
         let lat=success.coords.latitude;
         let long=success.coords.longitude;
-        this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{               
+        this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{
+          console.log(resp);
           this.jobs=resp;
         },
          error=>{
@@ -28,19 +29,18 @@ export class JobsComponent implements OnInit {
           });
    }
 
-   select(jobId:string){
+  select(jobId:string){
      console.log('On select event: '+ jobId.toString());
      for(let job of this.jobs){
        console.log(job._id);
        if(jobId.toString() == job._id){
-         console.log("=====");
+          console.log("=====");
           this.jobService.selectJob(job._id);
        } 
      }
      
    }
    
-
   ngOnInit() {
   }
 

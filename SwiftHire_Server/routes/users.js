@@ -10,7 +10,7 @@ const Rx = require('@reactivex/rxjs');
 	name: string,
 	avatar: url,
 	comments: [
-		{content: string, date: date, rate:number, jobId: number},
+		{content: string, date: date, rate:number, jobId: string, jobOwner: userId},
 		{},
 	]
 }
@@ -53,7 +53,6 @@ router.get('/init', function(req, res, next) {
             {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
         ]};
 
-
     req.users.insertMany([obj1, obj2, obj3], function(err, insertData){
         if (err) next(err);
         res.send("Insert Success");
@@ -82,6 +81,28 @@ router.get('/:userId', function(req, res, next) {
         if (error) next(error);
         console.log(data);
         res.json(data);
+    });
+});
+
+/**
+ * Add one comment for one worker/candidate
+ */
+router.post('/', function (req, res, next) {
+    var obj = {
+        content: req.body.content,
+        date: req.body.date,
+        rate: req.body.rate,
+        jobId: req.body.jobId,
+        jobOwner: req.body.jobOwner
+    };
+
+    let owner = req.body.jobOwner;
+    let query = {_id: owner};
+    let operate = {$push: { comments: obj } };
+    req.users.update(query, operate, function (err, data) {
+        if (error) next(error);
+        //console.log(data);
+        res.json({status:"success"});
     });
 });
 
