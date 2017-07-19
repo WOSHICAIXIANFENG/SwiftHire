@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, EventEmitter } from '@angular/core';
 import { WindowRef } from '../WindowRef';
 import { JobService } from "app/service/job.service";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 
 
 @Component({
@@ -16,12 +16,14 @@ export class JobsComponent implements OnInit {
   searchedJobs;
   searchForm: FormGroup;
   selectedData;
-
+  categoryList;
+  message;
   constructor(private jobService:JobService, private window: WindowRef, private fb: FormBuilder) {
    this.searched=false;
    this.searchForm=fb.group({
           'filter':['',Validators.required],
-          'search':['',Validators.required]
+          'dropList':[''],
+          'search':['']
    });
    this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
         let lat=success.coords.latitude;
@@ -31,18 +33,42 @@ export class JobsComponent implements OnInit {
           this.closeJobs=resp;
         },
          error=>{
-              console.log('This shit doesnt work');
-        });},
-        error=>{
-              alert('We are sorry your browser does not support geolocation detection');
+              alert('Your browser does not allow geolocation');
+        });
           });
+    
+      this.categoryList=jobService.categories;
    }
    
   ngOnInit() {
   }
 
   onSearch(){
-    console.log('Go to the server and filter '+this.searchForm.controls['search'].value);
+    this.searched=true;
+    let value;
+    if(this.searchForm.controls['filter'].value=='fee'){
+      value=this.searchForm.controls['search'].value;
+      console.log('Search: '+value);
+      this.jobService.getJobByFee(value).subscribe(res=>{
+        this.searchedJobs=res.json();
+      });
+
+    }else{
+        value=this.searchForm.controls['dropList'].value;
+        console.log('Selected: '+ value);
+            this.jobService.getJobByCategory(value).subscribe(res=>{
+                this.searchedJobs=res.json();
+            });
+            
+    }
+    
+  }
+
+  fieldsValidator(): {[s: string]: boolean}{
+      if(this.searchForm.controls['dropList'].value !== ' '|| this.searchForm.controls['search'].value!==' '){
+        return null;
+      }
+      return {something: false};
   }
 
 }
