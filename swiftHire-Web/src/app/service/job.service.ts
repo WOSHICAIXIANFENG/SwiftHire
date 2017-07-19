@@ -33,4 +33,8 @@ export class JobService {
   getJobsPosted(userId: any) {
     return this.http.get(AppConfig.BASE_URL + "jobs/" + userId + "/post");
   }
+
+  getCandidateList(jobId: any) {
+    return this.http.get(AppConfig.BASE_URL + "jobs/" + jobId + "/candidate");
+  }
 }

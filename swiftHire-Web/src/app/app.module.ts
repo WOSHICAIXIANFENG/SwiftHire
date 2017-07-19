@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, Http, RequestOptions, ConnectionBackend} from '@angular/http';
 import { AuthHttp,AuthConfig } from 'angular2-jwt';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { myRoutes } from "./app.routes";
 import { JobService } from './service/job.service';
@@ -44,7 +45,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   imports: [
     BrowserModule,
     HttpModule,
-    myRoutes
+    myRoutes,
+    ReactiveFormsModule
   ],
   providers: [JobService,
     UserService,

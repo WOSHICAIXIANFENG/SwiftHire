@@ -14,9 +14,9 @@ export class AuthService {
 
   constructor(private router: Router) {
     this.lock.on("loggedIn",result => {
-        console.log("Samuel test result = " + result);
+
     });
- }   
+ }
 
 
  login() {
@@ -29,10 +29,10 @@ export class AuthService {
      // We also get the user's JWT
     //  localStorage.setItem('id_token', id_token);
     localStorage.setItem('token', id_token);
-    
-     console.log("id_token = " + id_token);
-     console.log(tokenNotExpired());
-     this.router.navigate(['/home233']);
+
+     //console.log("id_token = " + id_token);
+     //console.log(tokenNotExpired());
+     //this.router.navigate(['/home233']);
    });
  }
 

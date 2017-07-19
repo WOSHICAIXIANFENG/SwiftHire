@@ -19,9 +19,11 @@ const MY_ROUTES: Routes = [
 
     ]},
 
-     { path: 'candidates', component: CandidatesComponent, children:[
-          {path: 'detail', component: CandidateComponent}
-     ]},
+    { path: 'jobs/posted/candidates', component: CandidatesComponent, children:[
+        {path: 'detail', component: CandidateComponent}
+    ]},
+
+
 
      // ** for all routes that we don't recognize,
      // Routes served from top to bottom so this should always come last!
