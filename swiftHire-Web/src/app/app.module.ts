@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, Http, RequestOptions, ConnectionBackend} from '@angular/http';
 import { AuthHttp,AuthConfig } from 'angular2-jwt';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { myRoutes } from "./app.routes";
 import { JobService } from './service/job.service';
@@ -19,7 +20,10 @@ import { CommentComponent } from './component/comment.component';
 import { ToolbarComponent} from './components/toolbar.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { JobsPostedComponent } from './component/jobsposted.component';
+import { JobsEnrolledComponent } from './component/jobenrolled.component';
 import { RateCommentComponent } from './component/ratecomment.component';
+import { ChosenPipe } from './pipe/chosenpipe.pipe';
+import { WaitPipe } from './pipe/waitpipe.pipe';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -39,12 +43,17 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ToolbarComponent,
     JobDetailsComponent,
     JobsPostedComponent,
-    RateCommentComponent
+    JobsEnrolledComponent,
+    RateCommentComponent,
+
+    ChosenPipe,
+    WaitPipe
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    myRoutes
+    myRoutes,
+    ReactiveFormsModule
   ],
   providers: [JobService,
     UserService,
