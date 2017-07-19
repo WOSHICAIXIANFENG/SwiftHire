@@ -5,16 +5,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class JobService {
-  selectedJob: EventEmitter<number>;
-  constructor(public http:Http) {
-    this.selectedJob=new EventEmitter();
-   }
-
-   selectJob(job:number){
-     console.log('The object to emit is: '+job);
-      this.selectedJob.emit(job);
-       console.log("selectJOb");
-   }
+  constructor(public http:Http) {}
 
   getAllNearJobs(lat: number, long: number) {
     return this.http.get(AppConfig.BASE_URL + "jobs/?lat="+lat+"&long="+long)
@@ -23,6 +14,18 @@ export class JobService {
 
    getJobs() {
     return this.http.get(AppConfig.BASE_URL + "jobs/all");
+  }
+
+  getJobByLocation(location:string){
+      return this.http.get(AppConfig.BASE_URL + "jobs/location/"+location);
+  }
+
+  getJobByCategory(category:string){
+    return this.http.get(AppConfig.BASE_URL + "jobs/category/"+category);
+  }
+
+  getJobByFee(fee:number){
+     return this.http.get(AppConfig.BASE_URL + "jobs/fee/"+fee);
   }
 
   postOneJob() {
