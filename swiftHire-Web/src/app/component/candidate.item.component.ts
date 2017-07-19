@@ -8,7 +8,7 @@ import { Component, OnInit, Output, Input } from '@angular/core';
   template:`  
     <div>
       <img [src]="item.avatar"/> <span>{{item.name}}</span><span>{{item.avergeRate}}</span>
-      <a [routerLink]="['candidates', 'detail']" [queryParams]="{id: item._id}">Detail</a>
+      <a [routerLink]="['detail']" [queryParams]="{id: item._id}">Detail</a>
     </div>
   `,
   providers:[]
