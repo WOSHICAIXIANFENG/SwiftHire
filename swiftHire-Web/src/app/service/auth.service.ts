@@ -28,7 +28,7 @@ export class AuthService {
      localStorage.setItem('profile', JSON.stringify(profile));
      // We also get the user's JWT
     //  localStorage.setItem('id_token', id_token);
-    localStorage.setItem('token', id_token);
+     localStorage.setItem('token', id_token);
 
      //console.log("id_token = " + id_token);
      //console.log(tokenNotExpired());

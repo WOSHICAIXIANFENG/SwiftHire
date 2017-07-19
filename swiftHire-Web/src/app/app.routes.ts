@@ -7,12 +7,14 @@ import { CandidateComponent } from './component/candidate.component';
 import { JobsPostedComponent } from './component/jobsposted.component';
 import { JobsEnrolledComponent } from './component/jobenrolled.component';
 import { RateCommentComponent } from './component/ratecomment.component';
+import { MyCanActivateGuard } from './guard/mycanactivate.guard';
 
 
 const MY_ROUTES: Routes = [
-    { path: '', redirectTo: 'jobs', pathMatch: 'full' }, 
-    { path: 'jobs', component: JobsComponent},
-     { path: 'error', component: ErrorComponent },
+    { path: '', redirectTo: 'jobs', pathMatch: 'full' },
+    { path: 'jobs', component: JobsComponent, canActivate:[MyCanActivateGuard]},
+    { path: 'details', canActivate:[MyCanActivateGuard], component: JobDetailsComponent },
+    { path: 'error', component: ErrorComponent },
      //children:[
       //  { path: 'details/:id', component: JobDetailsComponent },   
     //]
@@ -21,14 +23,16 @@ const MY_ROUTES: Routes = [
      // to match the redirect route when the URL begins with the redirect route's prefix path.
      // if 'prefix' all params/routes/xx will be redirected to homepage
 
-    { path: 'jobs/posted', component: JobsPostedComponent, children:[
-      { path: 'candidates', component: CandidatesComponent, children:[
-        {path: 'detail', component: CandidateComponent}
+    { path: 'jobs/posted', canActivate:[MyCanActivateGuard], component: JobsPostedComponent, children:[
+      { path: 'candidates', canActivate:[MyCanActivateGuard],  component: CandidatesComponent, children:[
+        {path: 'detail', canActivate:[MyCanActivateGuard], component: CandidateComponent}
       ]},
+      { path: 'details', canActivate:[MyCanActivateGuard],  component: JobDetailsComponent }
     ]},
 
-    { path: 'jobs/enrolled', component: JobsEnrolledComponent, children:[
-        {path: 'addcomment', component: RateCommentComponent}
+    { path: 'jobs/enrolled', canActivate:[MyCanActivateGuard], component: JobsEnrolledComponent, children:[
+        {path: 'addcomment', canActivate:[MyCanActivateGuard], component: RateCommentComponent},
+        { path: 'details', canActivate:[MyCanActivateGuard], component: JobDetailsComponent }
     ]},
 
      // ** for all routes that we don't recognize,

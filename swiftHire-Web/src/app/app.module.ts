@@ -17,13 +17,14 @@ import { CandidateComponent } from './component/candidate.component';
 import { CandidateItemComponent } from './component/candidate.item.component';
 import { CandidatesComponent } from './component/candidates.component';
 import { CommentComponent } from './component/comment.component';
-import { ToolbarComponent} from './components/toolbar.component';
+import { ToolbarComponent} from './component/toolbar.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { JobsPostedComponent } from './component/jobsposted.component';
 import { JobsEnrolledComponent } from './component/jobenrolled.component';
 import { RateCommentComponent } from './component/ratecomment.component';
 import { ChosenPipe } from './pipe/chosenpipe.pipe';
 import { WaitPipe } from './pipe/waitpipe.pipe';
+import { MyCanActivateGuard } from './guard/mycanactivate.guard';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -55,7 +56,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     myRoutes,
     ReactiveFormsModule
   ],
-  providers: [JobService,
+  providers: [
+    MyCanActivateGuard,
+    JobService,
     UserService,
     WindowRef,
      AuthService,
