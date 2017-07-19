@@ -35,6 +35,15 @@ export class CandidateComponent implements OnDestroy {
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private userService: UserService) {
     this.invalidate = false;
 
+    let temp = {
+      "avatar": '',
+      "name": 'name',
+      "avergeRate": 4.5,
+      "comments": []
+    };
+
+    this.item = temp;
+
     this.subscription = activatedRoute.queryParams.subscribe(
       (param: any) => {
         let id = param['id'];
