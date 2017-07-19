@@ -3,6 +3,7 @@
  */
 import { Component, OnInit, Output, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { JobService } from '../service/job.service';
 
 @Component({
   selector: 'candidate-item',
@@ -12,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
         <img [src]="item.avatar" class="img-circle" width="85" height="85" title="{{item.name}}"/>
         <span><b style="font-size:23px; padding-left:50px; padding-right:120px; ">{{item.name}}</b></span>
         <small style="margin-left: 200px">Average Rate: {{average}}</small>
-        <button (click)="onPick(item)" class="btn btn-outline-primary btn-sm" style="float: right">Choose</button>
+        <button (click)="onPick(item._id)" class="btn btn-outline-primary btn-sm" style="float: right">Choose</button>
       </div>
       <div *ngFor="let comment of item.comments">
             <comment [item]="comment"></comment>
@@ -27,8 +28,9 @@ export class CandidateItemComponent implements OnInit {
   @Input() item:any;
   invalidate:boolean;
   average:any;
+  @Input() jobId:string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private jobService: JobService) {
     this.invalidate = false;
   }
 
@@ -38,17 +40,24 @@ export class CandidateItemComponent implements OnInit {
         // calculate average rate
         let size = this.item.comments.length;
         this.average = this.item.comments.reduce((a, b) => a.rate + b.rate) / size;
-        console.log("Samuel Test average = " + this.average);
+        //console.log("Samuel Test average = " + this.average);
     }
   }
 
-  onPick(item: any) {
+  onPick(candidateId: any) {
     var result = confirm("Are you sure choose this candidate to do your job?");
     if (result) {
       // if user choose 'OK'.
       // call API to appy this job.
-      // navigate to home page
-      this.router.navigate(['/']);
+      this.jobService.applyOneJob(candidateId, this.jobId).subscribe(
+        res => {
+          //console.log("res == " + res);
+          // navigate to home page
+          this.router.navigate(['/']);
+        },
+        error => {},
+        () => {}
+      );
     }
   }
 }
