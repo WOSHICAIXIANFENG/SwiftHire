@@ -44,6 +44,20 @@ export class JobService {
   }
 
   /**
+   * Function to apply one job
+   * @param candidateId
+   * @param jobId
+   * @returns {Observable<Response>}
+   */
+  applyOneJob(candidateId:string, jobId:string) {
+    let body = {
+      "candidateId":candidateId,
+      "jobId":jobId
+    }
+    return this.http.post(AppConfig.BASE_URL + "jobs/apply", body);
+  }
+
+  /**
    * Function to get all posted jobs by userId
    * @param userId
    * @returns {Observable<Response>}
