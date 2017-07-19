@@ -101,12 +101,15 @@ router.get('/:userId/post', function(req, res, next) {
 /**
  *  Return all jobs I enrolled ---- apply success or still in waitlist
  */
-router.get('/:uerId/apply', function(req, res, next) {
+router.get('/:userId/apply', function(req, res, next) {
     let userId = req.params['userId'];
+    //console.log("Samuel Test get enrolled userId = " + userId);
     let query1 = {"candidate": userId};
     let query2 = {"candidate": null, "waitingList": {$elemMatch:{"_id": userId}, "$exists": true, $ne: [] }};
     req.jobs.find({$or:[query1, query2]}).sort("preferDate", 1).toArray(function(err, docArray){
         if (err) next(err);
+
+        //console.log("Samuel Test get enrolled docArray = " + docArray);
         res.json(docArray);
     });
 });
@@ -131,27 +134,12 @@ router.post('/choose', function(req, res, next){
     //console.log("Samuel Test userId 9999 candidateId = " + candidateId + " , jobId = " + jobId);
 
     let query = {_id: jobId};
-    let operate = {$set: {waitingList: [], candidate:candidateId } };
+    let operate = {$set: {waitingList: [], candidate:candidateId.toString() } };
     req.jobs.update(query, operate, function (err, data) {
         if (err) next(err);
         //console.log(data);
         res.json({status: "success"});
     });
-
-    // req.users.find({_id: candidateId + ""}).toArray(function(err, docArray){
-    //     if (err) next(err);
-    //     //console.log("Samuel Test userId 9999 doc = " + docArray);
-    //     if (docArray && docArray.length > 0) {
-    //         let candidate = docArray[0];
-    //         let query = {_id: jobId};
-    //         let operate = {$push: {waitingList: candidate } };
-    //         req.jobs.update(query, operate, function (err, data) {
-    //             if (err) next(err);
-    //             //console.log(data);
-    //             res.json({status: "success"});
-    //         });
-    //     }
-    // });
 });
 
 

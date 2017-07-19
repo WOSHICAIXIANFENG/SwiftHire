@@ -23,7 +23,7 @@ import { Subscription } from "rxjs/Rx";
             <td>{{j.hourFee}}</td>
             <td>{{j.preferDate}}</td>
             <td>{{j.preferTime}}</td>
-            <td><a [routerLink]="['details']" class="btn btn-primary">Details</a></td>
+            <td><a class="btn btn-primary" (click)="selectedData=j">Details</a></td>
             <td *ngIf="checkIfJobStart()"><a [routerLink]="['addcomment']" [queryParams]="{jobId: j._id}" class="btn btn-primary">Add Comment</a></td>
           </tr>
 
@@ -33,12 +33,13 @@ import { Subscription } from "rxjs/Rx";
             <td>{{j.hourFee}}</td>
             <td>{{j.preferDate}}</td>
             <td>{{j.preferTime}}</td>
-            <td><a [routerLink]="['details']" class="btn btn-primary">Details</a></td>
+            <td><a class="btn btn-primary" (click)="selectedData=j">Details</a></td>
           </tr>
         </table>
       </div>
     </div>
-    
+
+    <app-job-details *ngIf="selectedData" [data]="selectedData"></app-job-details>
     <router-outlet></router-outlet>
     
   `
@@ -46,6 +47,7 @@ import { Subscription } from "rxjs/Rx";
 
 export class JobsEnrolledComponent implements OnInit,OnDestroy {
   jobs: any;
+  selectedData;
 
   private subscription: Subscription;
 
@@ -56,9 +58,11 @@ export class JobsEnrolledComponent implements OnInit,OnDestroy {
     // todo it
     let ownderId = 3;
 
+    console.log("Samuel Test get enrolled ngOnInit = ");
     this.subscription = this.jobService.getJobsEnrolled(ownderId).subscribe(resp=>{
         //console.log(resp);
-        this.jobs=resp.json();
+        this.jobs = resp.json();
+        console.log("Samuel Test get enrolled this.jobs = " + this.jobs);
       },
       error=>{
         console.log('This doesnt work');

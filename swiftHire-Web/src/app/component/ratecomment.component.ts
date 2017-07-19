@@ -6,6 +6,7 @@ import { JobService } from "app/service/job.service";
 import { UserService } from "app/service/user.service";
 import { Subscription } from "rxjs/Rx";
 import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ratecomment',
@@ -16,11 +17,26 @@ import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms"
 export class RateCommentComponent implements OnDestroy {
   private subscription: Subscription;
   myForm: FormGroup;
-
+  jobId:string;
   @Input() jobObj:any;
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder) {
-    
+  constructor(private userService: UserService,private jobService: JobService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {
+    this.subscription = activatedRoute.queryParams.subscribe(
+      (param: any) => {
+        this.jobId = param['jobId'];
+        this.subscription = this.jobService.getCandidateList(this.jobId).subscribe(resp=>{
+            //console.log(resp);
+            if(resp && resp.json()) {
+              this.jobObj = resp.json();
+            } else {
+              this.jobObj = {};
+            }
+          },
+          error=>{
+            console.log('This doesnt work');
+          },()=>{});
+      }
+    );
   }
 
   ngOnInit() {
