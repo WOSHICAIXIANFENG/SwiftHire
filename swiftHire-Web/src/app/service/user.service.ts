@@ -24,10 +24,11 @@ export class UserService {
     return this.http.get(AppConfig.BASE_URL + "users/" + userId);
   }
 
-  addCommentForOwner(content:string, date:string) {
+  addCommentForOwner(content:string, date:string, rate:number) {
     return this.http.post(AppConfig.BASE_URL + "users/", {
       "content": content,
-      "date": date
+      "date": date,
+      "rate": rate
       // todo
     });
   }

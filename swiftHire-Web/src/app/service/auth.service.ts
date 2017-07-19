@@ -18,7 +18,6 @@ export class AuthService {
     });
  }
 
-
  login() {
    this.lock.show((error: string, profile: Object, id_token: string) => {
      if (error) {
@@ -27,12 +26,9 @@ export class AuthService {
      // We get a profile object for the user from Auth0
      localStorage.setItem('profile', JSON.stringify(profile));
      // We also get the user's JWT
-    //  localStorage.setItem('id_token', id_token);
      localStorage.setItem('token', id_token);
 
-     //console.log("id_token = " + id_token);
-     //console.log(tokenNotExpired());
-     //this.router.navigate(['/home233']);
+     this.router.navigate(['/jobs']);     
    });
  }
 
@@ -41,6 +37,7 @@ export class AuthService {
     // the user's profile and token
     localStorage.removeItem('profile');
     localStorage.removeItem('token');
+    this.router.navigate(['/error']);
  }
 
  loggedIn(): boolean {

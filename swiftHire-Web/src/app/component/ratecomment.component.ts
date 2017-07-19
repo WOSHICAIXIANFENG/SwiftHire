@@ -47,10 +47,11 @@ export class RateCommentComponent implements OnDestroy {
   }
 
   onSubmit() {
-    let da = new Date().toString();
+    let date = new Date().toString();
     let rate = this.myForm.controls['rate'].value;
     let content = this.myForm.controls['content'].value;
-    this.subscription = this.userService.addCommentForOwner(content, da).subscribe(resp=>{
+    
+    this.subscription = this.userService.addCommentForOwner(content, date, rate).subscribe(resp=>{
         this.jobObj=resp;
       },
       error=>{
