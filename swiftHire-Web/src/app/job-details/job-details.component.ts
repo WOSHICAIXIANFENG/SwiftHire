@@ -33,7 +33,8 @@ export class JobDetailsComponent implements OnInit {
     });
   }
 
-  apply(jobId:number){
+  onSubmit(){
+    //jobId:number
     //this.jobService.
   }
 

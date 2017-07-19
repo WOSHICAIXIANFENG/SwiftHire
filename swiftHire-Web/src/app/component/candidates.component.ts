@@ -9,8 +9,8 @@ import { Subscription } from "rxjs/Rx";
 @Component({
   selector: 'candidate-list',
   template:`    
-    <div *ngFor="let candidate of candidates">
-      <candidate-item [item]="candidate"></candidate-item>
+    <div *ngFor="let candidate of candidates" class="col-md-8">
+      <candidate-item [item]="candidate" class="row"></candidate-item>
     </div>
     <br>
     <router-outlet></router-outlet>
