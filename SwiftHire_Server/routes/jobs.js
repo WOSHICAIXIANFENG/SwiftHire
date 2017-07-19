@@ -74,6 +74,16 @@ router.get('/', function(req, res, next){
     });
 });
 
+router.get('/:id', function(req, res, next){
+    let query={_id: ObjectId(req.params['id'])};
+    req.jobs.findOne(query,function(err, docArray){
+            console.log("Returning" + docArray);
+        if (err) next(err);
+        res.json(docArray);
+    });
+});
+
+
 /**
  *  Return all jobs I posted
  */
