@@ -16,7 +16,7 @@ import { Subscription } from "rxjs/Rx";
         <span>{{item.name}}</span><span>{{item.avergeRate}}</span>
         <button (click)="onPick(item)">Choose</button>
         <br/>
-        <div *ngFor="let comment of item.comments">
+        <div *ngFor="let comment of comments">
           <comment [item]="comment"></comment>
         </div>
       </div>
@@ -30,14 +30,34 @@ export class CandidateComponent implements OnDestroy {
 
   @Input() item:any;
   invalidate:boolean;
+  comments: any;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private userService: UserService) {
     this.invalidate = false;
 
+    let temp = {
+      "avatar": '',
+      "name": 'name',
+      "avergeRate": 4.5,
+      "comments": []
+    };
+
+    this.item = temp;
+
     this.subscription = activatedRoute.queryParams.subscribe(
       (param: any) => {
         let id = param['id'];
-        this.item = this.userService.postUserDetail(id);
+        console.log("------------------- id = " + id);
+        this.userService.getUserDetail(id).subscribe(resp=>{
+            this.item = resp.json();
+            console.log("------------------- id = " + id);
+            console.log(this.item);
+            this.comments = this.item.comments;
+            console.log(this.comments);
+          },
+          error=>{
+            console.log('This doesnt work');
+          },()=>{});
       }
     );
   }

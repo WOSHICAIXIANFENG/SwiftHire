@@ -26,31 +26,31 @@ const Rx = require('@reactivex/rxjs');
  */
 router.get('/init', function(req, res, next) {
     let obj1 = {
-        "_id": 1,
+        "_id": "1",
         "name": "dara",
         "password": "123456",
         "avatar": "http://localhost:4000/images/user3.png",
         "comments": [
-            {"jobId": 1, "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
-            {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
+            {"jobId": "1", "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
+            {"jobId": "2", "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
         ]};
     let obj2 = {
-        "_id": 2,
+        "_id": "2",
         "name": "samuel",
         "password": "123456",
         "avatar": "http://localhost:4000/images/user1.png",
         "comments": [
-            {"jobId": 1, "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
-            {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
+            {"jobId": "1", "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
+            {"jobId": "2", "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
         ]};
     let obj3 = {
-        "_id": 3,
+        "_id": "3",
         "name": "diego",
         "password": "123456",
         "avatar": "http://localhost:4000/images/user2.png",
         "comments": [
-            {"jobId": 1, "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
-            {"jobId": 2, "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
+            {"jobId": "1", "rate": 5, "content": 'you did a good job.', "date":'July 12, 2017'},
+            {"jobId": "2", "rate": 2, "content": 'you need to improve.', "date":'June 13, 2017'}
         ]};
 
     req.users.insertMany([obj1, obj2, obj3], function(err, insertData){
@@ -75,12 +75,15 @@ router.get('/', function(req, res, next) {
  * Get user detail info
  */
 router.get('/:userId', function(req, res, next) {
-    let userId = req.params['userId'];
-    console.log("userId = " + userId);
-    req.users.find({"_id": ObjectId(userId)}).toArray(function(error, data) {
-        if (error) next(error);
-        console.log(data);
-        res.json(data);
+    let query = {_id: req.params['userId']};
+    //console.log("Samuel Test 777777 userId = " + req.params['userId']);
+    req.users.find(query).toArray(function(err, docArray){
+        if (err) next(err);
+        console.log("Samuel Test userId doc = " + docArray);
+        if (docArray && docArray.length > 0) {
+            res.json(docArray[0]);
+        }
+        res.status(200);
     });
 });
 

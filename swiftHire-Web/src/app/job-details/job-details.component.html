@@ -1,13 +1,19 @@
 <div class="container">
-<div class="col-md-8"> 
-      <h1 class="display-2">Job Details</h1>
-      <form class="form bordered" [formGroup]="myForm" (ngSubmit)="onSubmit()" >
-            <label class="control-label">Title:</label><input type="text" class="form-control" value="{{name}}" disabled/>
-            <label class="control-label">Description:</label><textarea class="form-control" cols="8" rows="4" value="{{description}}"> </textarea>
-            <label class="control-label">Hours:</label><input type="text" class="form-control" value="{{duration}}" disabled/><label class="control-label">Hour Fee:</label><input type="text" class="form-control" value="{{fee}}" disabled/>
-            <label class="control-label">Date:</label><input type="text" class="form-control" value="{{date}} {{time}}" disabled/>
-            <input type="hidden" name="id" value="{{id}}"/>
-            <input type="submit" class="btn btn-primary" value="Apply"/>
-      </form>
+<div class="col-md-6"> 
+      <div class="form-horizontal">
+          <fieldset>  
+            <legend><h2 class="display-3">Job Details:</h2></legend>
+            <label class="control-label">Title:</label><input type="text" class="form-control" value="{{data.name}}" disabled/>
+            <label class="control-label">Description:</label><textarea class="form-control" cols="8" rows="4" value="{{data.description}}" disabled> </textarea>
+            <label class="control-label">Hours:</label><input type="text" class="form-control" value="{{data.duration}}" disabled/>
+            <label class="control-label">Hour Fee:</label><input type="text" class="form-control" value="{{data.hourFee}}" disabled/>
+            <label class="control-label">Date:</label><input type="text" class="form-control" value="{{data.preferDate}}" disabled/>
+            <label class="control-label">Time:</label><input type="text" class="form-control" value="{{data.preferTime}}" disabled/>
+            <input type="hidden" value="{{id}}"/>
+            <br/>
+             <input type="button" class="btn btn-primary" value="Apply" (click)="onSubmit()"/>
+          </fieldset>
+      </div>
+
 </div>
 </div>

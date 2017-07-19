@@ -7,29 +7,32 @@ import { CandidateComponent } from './component/candidate.component';
 import { JobsPostedComponent } from './component/jobsposted.component';
 import { JobsEnrolledComponent } from './component/jobenrolled.component';
 import { RateCommentComponent } from './component/ratecomment.component';
+import { MyCanActivateGuard } from './guard/mycanactivate.guard';
 
 
 const MY_ROUTES: Routes = [
     { path: '', redirectTo: 'jobs', pathMatch: 'full' },
-    { path: 'jobs', component: JobsComponent,children:[
-        { path: 'details', component: JobDetailsComponent },
-    ]},
-     { path: 'error', component: ErrorComponent },
+    { path: 'jobs', component: JobsComponent, canActivate:[MyCanActivateGuard]},
+    { path: 'details', canActivate:[MyCanActivateGuard], component: JobDetailsComponent },
+    { path: 'error', component: ErrorComponent },
+     //children:[
+      //  { path: 'details/:id', component: JobDetailsComponent },   
+    //]
      // A redirect route requires a pathMatch property to tell the router how to match a URL to the path of a route.
      // The default matching strategy of Angular router is
      // to match the redirect route when the URL begins with the redirect route's prefix path.
      // if 'prefix' all params/routes/xx will be redirected to homepage
 
-    { path: 'jobs/posted', component: JobsPostedComponent, children:[
-      { path: 'candidates', component: CandidatesComponent, children:[
-        {path: 'detail', component: CandidateComponent}
+    { path: 'jobs/posted', canActivate:[MyCanActivateGuard], component: JobsPostedComponent, children:[
+      { path: 'candidates', canActivate:[MyCanActivateGuard],  component: CandidatesComponent, children:[
+        {path: 'detail', canActivate:[MyCanActivateGuard], component: CandidateComponent}
       ]},
-      { path: 'details', component: JobDetailsComponent }
+      { path: 'details', canActivate:[MyCanActivateGuard],  component: JobDetailsComponent }
     ]},
 
-    { path: 'jobs/enrolled', component: JobsEnrolledComponent, children:[
-        {path: 'addcomment', component: RateCommentComponent},
-        { path: 'details', component: JobDetailsComponent }
+    { path: 'jobs/enrolled', canActivate:[MyCanActivateGuard], component: JobsEnrolledComponent, children:[
+        {path: 'addcomment', canActivate:[MyCanActivateGuard], component: RateCommentComponent},
+        { path: 'details', canActivate:[MyCanActivateGuard], component: JobDetailsComponent }
     ]},
 
      // ** for all routes that we don't recognize,
