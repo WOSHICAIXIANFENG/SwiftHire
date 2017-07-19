@@ -6,7 +6,6 @@ import { Subscription } from "rxjs/Rx";
   selector: 'jobs-enrolled',
   template: `
     <div class="container">
-      <div class="col-md-8 col-md-offset-2">
         <table class="table">
           <tr class="row">
             <th>Tittle</th>
@@ -36,7 +35,6 @@ import { Subscription } from "rxjs/Rx";
             <td><a [routerLink]="['details']" class="btn btn-primary">Details</a></td>
           </tr>
         </table>
-      </div>
     </div>
     
     <router-outlet></router-outlet>

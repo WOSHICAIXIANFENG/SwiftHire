@@ -6,7 +6,6 @@ import { Subscription } from "rxjs/Rx";
   selector: 'jobs-posted',
   template: `
     <div class="container">
-      <div class="col-md-8 col-md-offset-2">
         <table class="table">
           <tr class="row">
             <th>Tittle</th>
@@ -29,7 +28,6 @@ import { Subscription } from "rxjs/Rx";
         </table>
         <app-job-details *ngIf="selectedData" [data]="selectedData"></app-job-details>
         <router-outlet></router-outlet>
-      </div>
     </div>
   `
 })

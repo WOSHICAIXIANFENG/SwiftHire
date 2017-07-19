@@ -8,10 +8,10 @@ import { JobService } from '../service/job.service';
 @Component({
   selector: 'candidate-item',
   template:`
-    <div class="list-group-item w-100" >
+    <div class="list-group-item w-500" >
       <div>
         <img [src]="item.avatar" class="img-circle" width="85" height="85" title="{{item.name}}"/>
-        <span><b style="font-size:23px; padding-left:50px; padding-right:120px; ">{{item.name}}</b></span>
+        <span><b style="font-size:23px; padding-left:50px; padding-right:80px; ">{{item.name}}</b></span>
         <small style="margin-left: 200px">Average Rate: {{average}}</small>
         <button (click)="onPick(item._id)" class="btn btn-outline-primary btn-sm" style="float: right">Choose</button>
       </div>
