@@ -11,10 +11,11 @@ import { RateCommentComponent } from './component/ratecomment.component';
 
 const MY_ROUTES: Routes = [
     { path: '', redirectTo: 'jobs', pathMatch: 'full' }, 
-    { path: 'jobs', component: JobsComponent,children:[
-        { path: 'details', component: JobDetailsComponent },   
-    ]},
+    { path: 'jobs', component: JobsComponent},
      { path: 'error', component: ErrorComponent },
+     //children:[
+      //  { path: 'details/:id', component: JobDetailsComponent },   
+    //]
      // A redirect route requires a pathMatch property to tell the router how to match a URL to the path of a route.
      // The default matching strategy of Angular router is
      // to match the redirect route when the URL begins with the redirect route's prefix path.

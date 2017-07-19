@@ -1,28 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { JobService } from "app/service/job.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
-  styleUrls: ['./job-details.component.css']
+  styleUrls: ['./job-details.component.css'],
+  inputs: ['data'],
 })
 export class JobDetailsComponent implements OnInit {
+  data;
   obj={_id:"",name:"",description:"",duration:"",hourFee:"",preferDate:"",preferTime:""};
-  id;
-  name;
-  description;
-  duration;
-  fee;
-  date;
-  time;
   constructor(private jobService:JobService) { 
-    
-  }
-
-  ngOnInit() {
     this.jobService.selectedJob.subscribe(data=>{
         //let data=resp.json();
-        console.log('Object I broguht from the other comp: '+data);
+        console.log('Object I brought from the other comp: '+data);
         /*this.id=data._id;
         this.name=data.name;
         this.description=data.description;
@@ -33,7 +25,12 @@ export class JobDetailsComponent implements OnInit {
     });
   }
 
+  ngOnInit() {
+    
+  }
+
   onSubmit(){
+    console.log('Getting the on click event');
     //jobId:number
     //this.jobService.
   }
