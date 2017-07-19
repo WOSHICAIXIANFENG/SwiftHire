@@ -78,7 +78,8 @@ router.get('/', function(req, res, next){
  *  Return all jobs I posted
  */
 router.get('/:uerId/post', function(req, res, next) {
-    let query = {"owner": ObjectId(req.params['userId'])};
+    let query = {"owner": req.params['userId']};
+    console.log("Samuel test query = " + query);
     req.jobs.find(query).sort("preferDate", 1).toArray(function(err, docArray){
         if (err) next(err);
         res.json(docArray);
