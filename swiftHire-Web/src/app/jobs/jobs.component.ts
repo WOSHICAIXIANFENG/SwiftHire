@@ -15,13 +15,12 @@ export class JobsComponent implements OnInit {
   closeJobs;
   searchedJobs;
   searchForm: FormGroup;
-  onSelected:EventEmitter<any>;
   selectedData;
 
   constructor(private jobService:JobService, private window: WindowRef, private fb: FormBuilder) {
-   this.onSelected=new EventEmitter();
    this.searched=false;
-   this.searchForm=this.fb.group({
+   this.searchForm=fb.group({
+          'filter':['',Validators.required],
           'search':['',Validators.required]
    });
    this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
@@ -37,18 +36,6 @@ export class JobsComponent implements OnInit {
         error=>{
               alert('We are sorry your browser does not support geolocation detection');
           });
-   }
-
-  select(jobId){
-     console.log('On select event: '+ jobId.toString());
-     for(let job of this.jobs){
-       console.log(job._id);
-       if(jobId.toString() == job._id){
-          console.log("=====");
-          this.jobService.selectJob(job._id);
-       } 
-     }
-     
    }
    
   ngOnInit() {

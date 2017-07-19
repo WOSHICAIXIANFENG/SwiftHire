@@ -75,15 +75,49 @@ router.get('/', function(req, res, next){
     });
 });
 
-router.get('/:id', function(req, res, next){
-    let query={_id: ObjectId(req.params['id'])};
-    req.jobs.findOne(query,function(err, docArray){
+
+/**
+ * Test: get jobs by minimum fee.
+ */
+router.get('/fee/:fee', function(req, res, next){
+    let fee= (req.params['fee']).toString();
+    let date= new Date();
+    req.jobs.find({'hourFee':{$gte: fee},'preferDate':{$gt:date}})
+        .toArray(function(err, docArray){
             console.log("Returning" + docArray);
         if (err) next(err);
         res.json(docArray);
     });
 });
 
+/**
+ * Test: get jobs by category.
+ */
+router.get('/category/:category', function(req, res, next){
+    let cat= req.params['category'];
+    let date=new Date();
+    req.jobs.find({'category':/cat/,'preferDate':{$gt:date}})
+        .toArray(function(err, docArray){
+            console.log("Returning" + docArray);
+        if (err) next(err);
+        res.json(docArray);
+    });
+});
+
+
+/**
+ * Test: get jobs by location.
+ */
+router.get('/location/:location', function(req, res, next){
+    let lat= parseFloat(req.query.lat);
+    let long = parseFloat(req.query.long);
+    req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $minDistance:100}}}).limit(10)
+        .toArray(function(err, docArray){
+            console.log("Returning" + docArray);
+        if (err) next(err);
+        res.json(docArray);
+    });
+});
 
 /**
  *  Return all jobs I posted
