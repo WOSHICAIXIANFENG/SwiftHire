@@ -18,6 +18,8 @@ import { CandidatesComponent } from './component/candidates.component';
 import { CommentComponent } from './component/comment.component';
 import { ToolbarComponent} from './components/toolbar.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { JobsPostedComponent } from './component/jobsposted.component';
+import { RateCommentComponent } from './component/ratecomment.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -35,7 +37,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     CandidateItemComponent,
     CommentComponent,
     ToolbarComponent,
-    JobDetailsComponent
+    JobDetailsComponent,
+    JobsPostedComponent,
+    RateCommentComponent
   ],
   imports: [
     BrowserModule,
