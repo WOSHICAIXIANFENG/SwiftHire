@@ -76,9 +76,14 @@ router.get('/', function(req, res, next) {
  */
 router.get('/:userId', function(req, res, next) {
     let query = {_id: req.params['userId']};
-    req.users.findOne(query, function(err, doc){
+    //console.log("Samuel Test 777777 userId = " + req.params['userId']);
+    req.users.find(query).toArray(function(err, docArray){
         if (err) next(err);
-        res.json(doc);
+        console.log("Samuel Test userId doc = " + docArray);
+        if (docArray && docArray.length > 0) {
+            res.json(docArray[0]);
+        }
+        res.status(200);
     });
 });
 

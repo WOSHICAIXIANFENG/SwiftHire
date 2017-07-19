@@ -29,7 +29,7 @@ export class CandidatesComponent implements OnInit,OnDestroy {
         let jobId = param['jobId'];
         this.subscription = this.jobService.getCandidateList(jobId).subscribe(resp=>{
             //console.log(resp);
-            if(resp.json().waitingList) {
+            if(resp && resp.json() && resp.json().waitingList) {
               this.candidates = resp.json().waitingList;
             } else {
               this.candidates = [];

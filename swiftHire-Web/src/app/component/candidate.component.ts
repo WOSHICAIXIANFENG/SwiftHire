@@ -47,9 +47,10 @@ export class CandidateComponent implements OnDestroy {
     this.subscription = activatedRoute.queryParams.subscribe(
       (param: any) => {
         let id = param['id'];
-        this.userService.postUserDetail(id).subscribe(resp=>{
+        console.log("------------------- id = " + id);
+        this.userService.getUserDetail(id).subscribe(resp=>{
             this.item = resp.json();
-            console.log("-------------------");
+            console.log("------------------- id = " + id);
             console.log(this.item);
             this.comments = this.item.comments;
             console.log(this.comments);
