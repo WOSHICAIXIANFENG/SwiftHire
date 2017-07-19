@@ -26,8 +26,7 @@ const MY_ROUTES: Routes = [
     { path: 'jobs/posted', canActivate:[MyCanActivateGuard], component: JobsPostedComponent, children:[
       { path: 'candidates', canActivate:[MyCanActivateGuard],  component: CandidatesComponent, children:[
         {path: 'detail', canActivate:[MyCanActivateGuard], component: CandidateComponent}
-      ]},
-      { path: 'details', canActivate:[MyCanActivateGuard],  component: JobDetailsComponent }
+      ]}
     ]},
 
     { path: 'jobs/enrolled', canActivate:[MyCanActivateGuard], component: JobsEnrolledComponent, children:[
