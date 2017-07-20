@@ -65,7 +65,7 @@ export class CreateJobComponent implements OnDestroy {
         this.jobService.postOneJob(obj).subscribe(success=>{
           this.myForm.reset();
           alert('Your job was successfully posted!');
-          this.router.navigate(['jobs']);
+          this.router.navigate(['jobs/posted']);
         },
         error=>{
             alert('It was not possible to post the job, an error happend');
