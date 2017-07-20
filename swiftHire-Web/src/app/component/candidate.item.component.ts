@@ -35,11 +35,15 @@ export class CandidateItemComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("Samuel Test  item = " + this.item);
+    console.log("Samuel Test  item.comments = " + this.item.comments);
     this.average = 5;
     if (this.item && this.item.comments) {
         // calculate average rate
-        let size = this.item.comments.length;
-        this.average = this.item.comments.reduce((a, b) => a.rate + b.rate) / size;
+        if (this.item.comments && this.item.comments.length > 0) {
+          let size = this.item.comments.length;
+          this.average = this.item.comments.reduce((a, b) => a.rate + b.rate) / size;
+        }
         //console.log("Samuel Test average = " + this.average);
     }
   }
