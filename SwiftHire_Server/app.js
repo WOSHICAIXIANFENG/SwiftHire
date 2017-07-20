@@ -15,8 +15,16 @@ var cors = require('cors');
 var app = express();
 
 var authCheck = jwt({
-  secret: new Buffer('gp37zq6_xriFoaLRKryicrHCPkVbzL22Ihr8se14aqevBOF3AhNEYMikVO8-LBwu', 'base64'),
-  audience: 'wPOJ2LiGIJgiiuqWnirTs2IIMd2q7Te9'
+    secret: new Buffer('gp37zq6_xriFoaLRKryicrHCPkVbzL22Ihr8se14aqevBOF3AhNEYMikVO8-LBwu', 'base64'),
+    audience: 'wPOJ2LiGIJgiiuqWnirTs2IIMd2q7Te9',
+    getToken: function fromHeaderOrQuerystring (req) {
+        if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            return req.headers.authorization.split(' ')[1];
+        } else if (req.query && req.query.token) {
+            return req.query.token;
+        }
+        return null;
+    }
 });
 
 // view engine setup
@@ -35,6 +43,10 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// // route for JWT token check
+// app.use(authCheck, function(req, res, next) {
+//     next();
+// });
 
 // route for db
 app.use(function(req, res, next) {

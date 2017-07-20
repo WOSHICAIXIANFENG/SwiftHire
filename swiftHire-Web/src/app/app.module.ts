@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule, Http, RequestOptions, ConnectionBackend} from '@angular/http';
+import { HttpModule, Http, RequestOptions, ConnectionBackend, XHRBackend} from '@angular/http';
+import { HttpService } from './service/http.service';
+
 import { AuthHttp,AuthConfig } from 'angular2-jwt';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -59,10 +61,19 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ReactiveFormsModule
   ],
   providers: [
+    {
+      provide: HttpService,
+      useFactory: (backend: XHRBackend, options: RequestOptions) => {
+        return new HttpService(backend, options);
+      },
+      deps: [XHRBackend, RequestOptions]
+    },
+
     MyCanActivateGuard,
     JobService,
     UserService,
     WindowRef,
+
      AuthService,
      {provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http, RequestOptions]}],
   bootstrap: [AppComponent]

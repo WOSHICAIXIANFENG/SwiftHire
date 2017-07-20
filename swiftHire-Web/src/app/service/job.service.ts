@@ -1,12 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpService } from './http.service';
 import { AppConfig } from '../AppConfig';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class JobService {
   categories=['Domestic work','Physical work','Other'];
-  constructor(public http:Http) {}
+  constructor(public http:HttpService) {}
 
   getAllNearJobs(lat: number, long: number) {
     return this.http.get(AppConfig.BASE_URL + "jobs/?lat="+lat+"&long="+long)
