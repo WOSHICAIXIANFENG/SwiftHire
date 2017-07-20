@@ -191,7 +191,6 @@ router.post('/apply', function(req, res, next){
  * Add one job
  */
 router.post('/', function(req, res, next){
-    console.log("I get here and the object is:"+ req.body.lat);
     let loc={ type:"Point",
               coordinates:[req.body.long,req.body.lat]};
     let dat=new Date(req.body.preferDate);
