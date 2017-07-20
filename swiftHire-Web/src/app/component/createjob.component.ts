@@ -3,7 +3,7 @@ import { JobService } from "app/service/job.service";
 import { UserService } from "app/service/user.service";
 import { Subscription } from "rxjs/Rx";
 import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { WindowRef } from '../WindowRef';
 
 @Component({
@@ -18,7 +18,7 @@ export class CreateJobComponent implements OnDestroy {
    //jobId:string;
    @Input() jobObj:any;
 
-  constructor(private userService: UserService, private jobService: JobService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private window: WindowRef) {
+  constructor(private userService: UserService, private jobService: JobService, private formBuilder: FormBuilder, private window: WindowRef,private router:Router) {
 
     let myId = localStorage.getItem("userId");
 
@@ -32,18 +32,6 @@ export class CreateJobComponent implements OnDestroy {
       'preferTime': ['', [Validators.required]],
       'lat':[''],
       'long':['']
-    });
-
-    this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
-        let lat=success.coords.latitude;
-        let long=success.coords.longitude;
-        
-        this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{
-          console.log(resp);
-        },
-         error=>{
-              alert('Your browser does not allow geolocation');
-        });
     });
     
   }
@@ -63,10 +51,21 @@ export class CreateJobComponent implements OnDestroy {
     this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
         let lat=success.coords.latitude;
         let long=success.coords.longitude;
-        this.myForm.controls['lat']=lat;
-        this.myForm.controls['long']=long;
-        this.jobService.postOneJob(this.myForm).subscribe(success=>{
-
+        let obj={"name":name,
+          "description":description,
+          "categories":categories,
+          "duration":duration,
+          "hourFee":hourFee,
+          "lat":lat,
+          "long":long,
+          "preferDate":preferDate,
+          "preferTime":preferTime,
+          "owner":myId,
+          "available":true};
+        this.jobService.postOneJob(obj).subscribe(success=>{
+          this.myForm.reset();
+          alert('Your job was successfully posted!');  
+          this.router.navigate(['jobs']);
         },
         error=>{
             alert('It was not possible to post the job, an error happend');
