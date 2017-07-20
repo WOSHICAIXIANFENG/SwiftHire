@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class JobService {
+  categories=['Domestic work','Physical work','Other'];
   constructor(public http:Http) {}
 
   getAllNearJobs(lat: number, long: number) {
@@ -16,10 +17,6 @@ export class JobService {
     return this.http.get(AppConfig.BASE_URL + "jobs/all");
   }
 
-  getJobByLocation(location:string){
-      return this.http.get(AppConfig.BASE_URL + "jobs/location/"+location);
-  }
-
   getJobByCategory(category:string){
     return this.http.get(AppConfig.BASE_URL + "jobs/category/"+category);
   }
@@ -28,8 +25,8 @@ export class JobService {
      return this.http.get(AppConfig.BASE_URL + "jobs/fee/"+fee);
   }
 
-  postOneJob() {
-
+  postOneJob(job:any) {
+    return this.http.post(AppConfig.BASE_URL + "jobs/",job);
   }
 
   /**

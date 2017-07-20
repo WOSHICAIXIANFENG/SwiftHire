@@ -57,14 +57,11 @@ export class JobsEnrolledComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     // try to get my userId from localstorage.
-    // todo it
-    let ownderId = 3;
-
-    console.log("Samuel Test get enrolled ngOnInit = ");
-    this.subscription = this.jobService.getJobsEnrolled(ownderId).subscribe(resp=>{
+    let myId = localStorage.getItem("userId");
+    this.subscription = this.jobService.getJobsEnrolled(myId).subscribe(resp=>{
         //console.log(resp);
         this.jobs = resp.json();
-        console.log("Samuel Test get enrolled this.jobs = " + this.jobs);
+        //console.log("Samuel Test get enrolled this.jobs = " + this.jobs);
       },
       error=>{
         console.log('This doesnt work');

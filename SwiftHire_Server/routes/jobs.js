@@ -9,6 +9,7 @@ var ObjectId = require('mongodb').ObjectID;
 *
 *
 * Job Collection {
+* _id:string,
  name: string,
  description: string,
  category:string,
@@ -17,12 +18,12 @@ var ObjectId = require('mongodb').ObjectID;
  hourFee: number,// hourly fees rate
  preferDate: date,//preferred date
  preferTime: time, // preferred time.
- owner: userId,
- candidate: anotherUserId,
+ owner: userId:string,
+ candidate: anotherUserId:string,
  available: boolean, // true --- is aviable for all users, false --- when the owner already picked one candidate. or job expired
  waitingList:[
- {userId},
- {userId}
+ {the whole user json data},
+ {}
  ]
  }
 
@@ -80,11 +81,11 @@ router.get('/', function(req, res, next){
  * Test: get jobs by minimum fee.
  */
 router.get('/fee/:fee', function(req, res, next){
-    let fee= (req.params['fee']).toString();
+    let fee= parseFloat(req.params['fee']);
     let date= new Date();
     req.jobs.find({'hourFee':{$gte: fee},'preferDate':{$gt:date}})
         .toArray(function(err, docArray){
-            console.log("Returning" + docArray);
+        console.log("Returning" + docArray);
         if (err) next(err);
         res.json(docArray);
     });
@@ -94,24 +95,10 @@ router.get('/fee/:fee', function(req, res, next){
  * Test: get jobs by category.
  */
 router.get('/category/:category', function(req, res, next){
-    let cat= req.params['category'];
+    let cat= req.params["category"].trim();
     let date=new Date();
-    req.jobs.find({'category':/cat/,'preferDate':{$gt:date}})
-        .toArray(function(err, docArray){
-            console.log("Returning" + docArray);
-        if (err) next(err);
-        res.json(docArray);
-    });
-});
-
-
-/**
- * Test: get jobs by location.
- */
-router.get('/location/:location', function(req, res, next){
-    let lat= parseFloat(req.query.lat);
-    let long = parseFloat(req.query.long);
-    req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $minDistance:100}}}).limit(10)
+    let query={"category": cat,'preferDate':{$gt:date}};
+    req.jobs.find(query)
         .toArray(function(err, docArray){
             console.log("Returning" + docArray);
         if (err) next(err);
@@ -204,11 +191,13 @@ router.post('/apply', function(req, res, next){
  * Add one job
  */
 router.post('/', function(req, res, next){
+    let loc={ type:"Point",
+              coordinates:[req.body.long,req.body.lat]};
     var obj = {
         name: req.body.name,
         description: req.body.description,
         category: req.body.category,
-        location: req.body.location,
+        location: loc,
         duration: req.body.duration,
         hourFee: req.body.hourFee,
         preferDate: req.body.preferDate,
@@ -230,10 +219,10 @@ router.post('/', function(req, res, next){
 router.get('/init', function(req, res, next) {
     //req.jobs.createIndex({'location:':'2dsphere'}); // run in mongo shell
 
-    let obj1 = {"_id":"1","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800002]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"1"};
-    let obj2 = {"_id":"2","name":"Clean the restroom","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800019]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"2"};
-    let obj3 = {"_id":"3","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811167,41.00800002]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
-    let obj4 = {"_id":"4","name":"Wash Window","description":"Wash my neigbours Ferrari","category":"Wash","location":{"type":"Point", "coordinates":[-91.96811168,41.00800001]},"duration":"2","hourFee":"8","preferDate":"7/18/2017","preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
+    let obj1 = {"_id":"1","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Domestic work","location":{"type":"Point", "coordinates":[-91.96811168,41.00800002]},"duration":2,"hourFee":8,"preferDate":new Date("2017-07-22T15:00:00Z"),"preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"1"};
+    let obj2 = {"_id":"2","name":"Clean the restroom","description":"Wash my neigbours Ferrari","category":"Physical work","location":{"type":"Point", "coordinates":[-91.96811168,41.00800019]},"duration":2,"hourFee":8,"preferDate":new Date("2017-07-22T15:00:00Z"),"preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"2"};
+    let obj3 = {"_id":"3","name":"Wash car","description":"Wash my neigbours Ferrari","category":"Domestic work","location":{"type":"Point", "coordinates":[-91.96811167,41.00800002]},"duration":2,"hourFee":8,"preferDate":new Date("2017-07-22T15:00:00Z"),"preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
+    let obj4 = {"_id":"4","name":"Wash Window","description":"Wash my neigbours Ferrari","category":"Domestic work","location":{"type":"Point", "coordinates":[-91.96811168,41.00800001]},"duration":2,"hourFee":8,"preferDate":new Date("2017-07-22T15:00:00Z"),"preferTime":"3:00 pm","candidate":"","available":"true","waitingList":[],"owner":"3"};
 
     req.jobs.insertMany([obj1, obj2, obj3, obj4], function(err, insertData){
         if (err) next(err);

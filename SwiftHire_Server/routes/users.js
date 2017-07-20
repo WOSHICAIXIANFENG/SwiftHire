@@ -109,5 +109,35 @@ router.post('/', function (req, res, next) {
     });
 });
 
+/**
+ * Upsert one user
+ */
+router.post('/upsert', function (req, res, next) {
+    let obj = {
+        "_id":req.body._id,
+        "name":req.body.name,
+        "avatar":req.body.avatar,
+        "password":"",
+        "comments":[]
+    }
+
+    //console.log("samuel add one user _id = " + req.body._id);
+    let query = {_id: req.body._id};
+    if (req.users.find(query).count() > 0) {
+        let operate = {$set: {name: req.body.name, avatar: req.body.avatar} };
+        req.users.update(query, operate, function (err, data) {
+            if (err) next(err);
+            //console.log(data);
+            res.json({status:"success"});
+        });
+    } else {
+        req.users.insert(obj, function (err, data) {
+            if (err) next(err);
+            //console.log(data);
+            res.json({status:"success"});
+        });
+    }
+
+});
 module.exports = router;
 
