@@ -24,11 +24,11 @@ import { Subscription } from "rxjs/Rx";
             <td>{{j.preferDate | date:"MM-dd-yyyy"}}</td>
             <td>{{j.preferTime}}</td>
             <td><a class="btn btn-primary" (click)="selectedData=j;hideFlag=false;">Details</a></td>
-            <td><a [routerLink]="['candidates']" [queryParams]="{jobId: j._id}" class="btn btn-primary" (click)="onBtnClick()">Candidates</a></td>
+            <td *ngIf="j.waitList?.length > 0" ><a [routerLink]="['candidates']" [queryParams]="{jobId: j._id}" class="btn btn-primary" (click)="onBtnClick()">Candidates</a></td>
           </tr>
         </table>
-        <app-job-details *ngIf="selectedData && !hideFlag" [data]="selectedData"></app-job-details>
-        <router-outlet></router-outlet>
+        <job_detail *ngIf="selectedData  && !hideFlag" [data]="selectedData" ></job_detail>
+        <router-outlet *ngIf="hideFlag"></router-outlet>
     </div>
   `
 })

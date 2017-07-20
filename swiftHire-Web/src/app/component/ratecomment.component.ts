@@ -41,7 +41,7 @@ export class RateCommentComponent implements OnDestroy {
 
   ngOnInit() {
     this.myForm = this.formBuilder.group({
-      'rate': ['', [Validators.required]],
+      'rate': [''],
       'content': ['', [Validators.required]]
     });
   }
@@ -60,6 +60,7 @@ export class RateCommentComponent implements OnDestroy {
     this.userService.getUserDetail(this.jobObj.owner).subscribe(resp => {
         let jobOwner = resp.json().name;
         this.subscription = this.userService.addCommentForOwner(content, date, rate, jobId, jobOwner,this.jobObj.owner).subscribe(resp=>{
+            alert("Add one comment for this worker successfully");
             this.myForm.reset();
           },
           error=>{

@@ -53,7 +53,7 @@ export class CandidateItemComponent implements OnInit {
         res => {
           //console.log("res == " + res);
           // navigate to home page
-          this.router.navigate(['/']);
+          this.router.navigate(['/jobs/posted']);
         },
         error => {},
         () => {}

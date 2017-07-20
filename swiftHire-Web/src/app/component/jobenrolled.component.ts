@@ -39,7 +39,7 @@ import { Subscription } from "rxjs/Rx";
     </div>
 
     <job_detail *ngIf="selectedData  && !hideFlag" [data]="selectedData" ></job_detail>
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="hideFlag"></router-outlet>
     
   `
 })
