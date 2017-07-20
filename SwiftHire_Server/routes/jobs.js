@@ -68,7 +68,7 @@ router.get('/all', function(req, res, next){
 router.get('/', function(req, res, next){
     let lat= parseFloat(req.query.lat);
     let long = parseFloat(req.query.long);
-    req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $minDistance:100}}}).limit(10)
+    req.jobs.find({"location":{$near:{$geometry:{type:"Point", coordinates:[long, lat]}, $maxDistance:10000}}}).limit(10)
         .toArray(function(err, docArray){
             console.log("Returning" + docArray);
         if (err) next(err);
