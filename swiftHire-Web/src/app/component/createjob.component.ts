@@ -72,21 +72,6 @@ export class CreateJobComponent implements OnDestroy {
             alert('It was not possible to post the job, an error happend');
         });
     });
-    
-    // this.jobService.postOneJob(this.jobObj.userId).subscribe(resp => {
-    // //     let jobOwner = resp.json().name;
-    //      this.subscription = this.jobService.getJobsPosted(this.jobObj.userId).subscribe(resp=>{
-    //          this.myForm.reset();
-    //        },
-    //        error=>{
-    //          console.log('This doesnt work');
-    //        },()=>{});
-    //    },
-    //    error=>{
-    //      console.log('This doesnt work');
-    //    },()=>{});
-
-    //  console.log(this.myForm.value);
   }
 
   ngOnDestroy() {
