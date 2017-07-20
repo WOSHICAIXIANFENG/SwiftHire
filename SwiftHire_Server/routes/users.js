@@ -100,7 +100,7 @@ router.post('/', function (req, res, next) {
     };
 
     let owner = req.body.jobOwnerId;
-    let query = {_id: owner};
+    let query = {_id: ObjectId(owner)};
     let operate = {$push: { comments: obj } };
     req.users.update(query, operate, function (err, data) {
         if (err) next(err);
@@ -121,13 +121,14 @@ router.post('/upsert', function (req, res, next) {
         "comments":[]
     }
 
-    //console.log("samuel add one user _id = " + req.body._id);
+    //console.log("samuel add one  _id = " + req.body._id);
     let query = {_id: ObjectId(req.body._id)};
     if (req.users.find(query).count() > 0) {
         let operate = {$set: {name: req.body.name, avatar: req.body.avatar} };
         req.users.update(query, operate, function (err, data) {
             if (err) next(err);
-            //console.log(data);
+            //console.log("=========== add one comment ");
+            console.log(data);
             res.json({status:"success"});
         });
     } else {

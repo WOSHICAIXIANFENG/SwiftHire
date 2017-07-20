@@ -25,6 +25,7 @@ const MY_ROUTES: Routes = [
      // if 'prefix' all params/routes/xx will be redirected to homepage
 
     { path: 'jobs/posted', canActivate:[MyCanActivateGuard], component: JobsPostedComponent, children:[
+      {path: 'addcomment', canActivate:[MyCanActivateGuard], component: RateCommentComponent},
       { path: 'candidates', canActivate:[MyCanActivateGuard],  component: CandidatesComponent, children:[
         {path: 'detail', canActivate:[MyCanActivateGuard], component: CandidateComponent}
       ]}
