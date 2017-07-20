@@ -37,7 +37,7 @@ import { Subscription } from "rxjs/Rx";
         </table>
     </div>
 
-    <app-job-details *ngIf="selectedData  && !hideFlag" [data]="selectedData"></app-job-details>
+    <app-job-details *ngIf="selectedData  && !hideFlag" [data]="selectedData" [hideApplyBtn]="true"></app-job-details>
     <router-outlet></router-outlet>
     
   `
@@ -61,7 +61,7 @@ export class JobsEnrolledComponent implements OnInit,OnDestroy {
     this.subscription = this.jobService.getJobsEnrolled(myId).subscribe(resp=>{
         //console.log(resp);
         this.jobs = resp.json();
-        //console.log("Samuel Test get enrolled this.jobs = " + this.jobs);
+        console.log("Samuel Test get enrolled this.jobs = " + this.jobs);
       },
       error=>{
         console.log('This doesnt work');

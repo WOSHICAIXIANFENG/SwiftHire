@@ -10,13 +10,11 @@ export class WaitPipe implements PipeTransform {
   transform(items: any, field?: any): any {
     if (!items) return [];
 
-    // get userId from localStorage
-    // todo
-    //let userId = 3;
-    let userId = 3;
+    // try to get my userId from localstorage.
+    let myId = localStorage.getItem("userId");
     return items.filter(i => {
       if (i.waitingList) {
-        if (i.waitingList.filter(u => u._id == userId).length > 0) {
+        if (i.waitingList.filter(u => u._id == myId).length > 0) {
           return true;
         }
       }

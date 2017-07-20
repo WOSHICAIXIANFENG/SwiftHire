@@ -75,7 +75,7 @@ router.get('/', function(req, res, next) {
  * Get user detail info
  */
 router.get('/:userId', function(req, res, next) {
-    let query = {_id: req.params['userId']};
+    let query = {_id: ObjectId(req.params['userId'])};
     //console.log("Samuel Test 777777 userId = " + req.params['userId']);
     req.users.find(query).toArray(function(err, docArray){
         if (err) next(err);
@@ -114,7 +114,7 @@ router.post('/', function (req, res, next) {
  */
 router.post('/upsert', function (req, res, next) {
     let obj = {
-        "_id":req.body._id,
+        "_id":ObjectId(req.body._id),
         "name":req.body.name,
         "avatar":req.body.avatar,
         "password":"",
@@ -122,7 +122,7 @@ router.post('/upsert', function (req, res, next) {
     }
 
     //console.log("samuel add one user _id = " + req.body._id);
-    let query = {_id: req.body._id};
+    let query = {_id: ObjectId(req.body._id)};
     if (req.users.find(query).count() > 0) {
         let operate = {$set: {name: req.body.name, avatar: req.body.avatar} };
         req.users.update(query, operate, function (err, data) {

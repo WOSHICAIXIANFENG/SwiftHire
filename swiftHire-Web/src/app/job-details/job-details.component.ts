@@ -10,8 +10,10 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class JobDetailsComponent implements OnInit {
   data;
+  hideApplyBtn:boolean;
 
   constructor(private jobService:JobService) {
+    this.hideApplyBtn = false;
   }
 
   ngOnInit() {
