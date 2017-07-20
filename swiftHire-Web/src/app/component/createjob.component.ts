@@ -42,7 +42,7 @@ export class CreateJobComponent implements OnDestroy {
     let myId = localStorage.getItem("userId");
     var name = this.myForm.controls['name'].value;
     var description = this.myForm.controls['description'].value;
-    var categories = this.myForm.controls['categories'].value;
+    var category = this.myForm.controls['categories'].value;
     var duration = this.myForm.controls['duration'].value;
     var hourFee = this.myForm.controls['hourFee'].value;
     var preferDate = this.myForm.controls['preferDate'].value;
@@ -53,7 +53,7 @@ export class CreateJobComponent implements OnDestroy {
         let long=success.coords.longitude;
         let obj={"name":name,
           "description":description,
-          "categories":categories,
+          "category":category,
           "duration":duration,
           "hourFee":hourFee,
           "lat":lat,
@@ -65,7 +65,7 @@ export class CreateJobComponent implements OnDestroy {
         this.jobService.postOneJob(obj).subscribe(success=>{
           this.myForm.reset();
           alert('Your job was successfully posted!');
-          this.router.navigate(['jobs']);
+          this.router.navigate(['jobs/posted']);
         },
         error=>{
             alert('It was not possible to post the job, an error happend');
