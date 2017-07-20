@@ -22,6 +22,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
 import { JobsPostedComponent } from './component/jobsposted.component';
 import { JobsEnrolledComponent } from './component/jobenrolled.component';
 import { RateCommentComponent } from './component/ratecomment.component';
+import { CreateJobComponent } from './component/createjob.component';
 import { ChosenPipe } from './pipe/chosenpipe.pipe';
 import { WaitPipe } from './pipe/waitpipe.pipe';
 import { MyCanActivateGuard } from './guard/mycanactivate.guard';
@@ -46,6 +47,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     JobsPostedComponent,
     JobsEnrolledComponent,
     RateCommentComponent,
+    CreateJobComponent,
 
     ChosenPipe,
     WaitPipe
