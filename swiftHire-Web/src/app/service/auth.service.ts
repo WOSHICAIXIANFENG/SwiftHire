@@ -2,7 +2,6 @@
 import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
 import { UserService } from './user.service';
 
 // We want to avoid any 'name not found'
@@ -41,11 +40,11 @@ export class AuthService {
       * "name":"leangchandara@gmail.com","last_password_reset":"2017-07-18T17:19:44.282Z",
       * "global_client_id":"SIWH_PHeuykfwdaQ-MxbM8KWYKjAE1uZ"}
       */
-     console.log("=========================");
-     console.log(JSON.stringify(profile));
+     console.log("=========================token");
+     //console.log(JSON.stringify(profile));
      // We also get the user's JWT
      localStorage.setItem('token', id_token);
-     console.log(JSON.stringify(profile));
+     console.log(id_token);
 
      // add by xianfeng
      // create or update one User in our database
@@ -68,6 +67,9 @@ export class AuthService {
     // the user's profile and token
     localStorage.removeItem('profile');
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+
     this.router.navigate(['/error']);
  }
 

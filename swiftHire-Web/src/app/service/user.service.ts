@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpService } from './http.service';
 import { AppConfig } from '../AppConfig';
 
 @Injectable()
 export class UserService {
 
-  constructor(public http:Http) { }
+  constructor(public http:HttpService) { }
 
   getAllUsers() {
     return this.http.get(AppConfig.BASE_URL + "users/");
