@@ -54,11 +54,23 @@ export class JobsComponent implements OnInit {
       });
 
     }else{
-        value=this.searchForm.controls['dropList'].value;
-        console.log('Selected: '+ value);
-            this.jobService.getJobByCategory(value).subscribe(res=>{
-                this.searchedJobs=res.json();
+        if(this.searchForm.controls['filter'].value=='category'){
+              value=this.searchForm.controls['dropList'].value;
+              this.jobService.getJobByCategory(value).subscribe(res=>{
+                  this.searchedJobs=res.json();
+              });
+        }else{
+           this.window.nativeWindow.navigator.geolocation.getCurrentPosition(success=>{
+                let lat=success.coords.latitude;
+                let long=success.coords.longitude;
+                this.jobService.getAllNearJobs(lat,long).subscribe(resp=>{
+                      this.searchedJobs=resp;
+                },
+                error=>{
+                      alert('Your browser does not allow geolocation');
+                  });
             });
+        }
             
     }
     
@@ -68,7 +80,7 @@ export class JobsComponent implements OnInit {
       if(this.searchForm.controls['dropList'].value !== ' '|| this.searchForm.controls['search'].value!==' '){
         return null;
       }
-      return {something: false};
+      return {property:false};
   }
 
 }

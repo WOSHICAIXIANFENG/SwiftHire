@@ -11,19 +11,25 @@
         <input type="radio" value="category" name="filter" formControlName="filter"/>     
         Category
       </label></li> 
+      <li><label class="label-control">
+        <input type="radio" value="location" name="filter" formControlName="filter"/>     
+        Location
+      </label></li>
       </ul>
     </div> 
     <div class="form-group">
-    <div *ngIf="searchForm.controls['filter'].value=='fee'; else categories">
+      <div *ngIf="searchForm.controls['filter'].value!=='location'">
+        <div *ngIf="searchForm.controls['filter'].value=='fee'; else categories">
             <input type="text" class="form-control" formControlName="search" placeholder="Search">
+        </div>
+        <ng-template #categories>
+            <select class="form-control" formControlName="dropList">
+              <option *ngFor="let c of categoryList" [value]="c">{{c}}</option>
+            </select>
+        </ng-template>
+      </div>
     </div>
-    <ng-template #categories>
-        <select class="form-control" formControlName="dropList">
-           <option *ngFor="let c of categoryList" [value]="c">{{c}}</option>
-        </select>
-    </ng-template>
-    </div>
-      <button type="submit" [disabled]="!searchForm.valid" class="btn btn-primary">Search</button>
+    <button type="submit" [disabled]="!searchForm.valid" class="btn btn-primary">Search</button>
     </div>
     </form>
 
