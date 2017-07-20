@@ -25,8 +25,8 @@ export class JobService {
      return this.http.get(AppConfig.BASE_URL + "jobs/fee/"+fee);
   }
 
-  postOneJob() {
-
+  postOneJob(job:any) {
+    return this.http.post(AppConfig.BASE_URL + "jobs/",job);
   }
 
   /**

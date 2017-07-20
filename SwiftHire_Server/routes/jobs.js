@@ -191,11 +191,14 @@ router.post('/apply', function(req, res, next){
  * Add one job
  */
 router.post('/', function(req, res, next){
+    let loc={ type:"Point",
+              coordinates:[req.body.long,req.body.lat]};
+    let dat=new Date(req.body.preferDate);
     var obj = {
         name: req.body.name,
         description: req.body.description,
         category: req.body.category,
-        location: req.body.location,
+        location: loc,
         duration: req.body.duration,
         hourFee: req.body.hourFee,
         preferDate: req.body.preferDate,
