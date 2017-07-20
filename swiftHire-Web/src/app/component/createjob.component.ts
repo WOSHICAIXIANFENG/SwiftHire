@@ -16,7 +16,7 @@ export class CreateJobComponent implements OnDestroy {
    private subscription: Subscription;
    myForm: FormGroup;
    //jobId:string;
-   @Input() jobObj:any;
+   // @Input() jobObj:any;
 
   constructor(private userService: UserService, private jobService: JobService, private formBuilder: FormBuilder, private window: WindowRef,private router:Router) {
 
@@ -33,7 +33,7 @@ export class CreateJobComponent implements OnDestroy {
       'lat':[''],
       'long':['']
     });
-    
+
   }
 
   ngOnInit() {}
@@ -64,7 +64,7 @@ export class CreateJobComponent implements OnDestroy {
           "available":true};
         this.jobService.postOneJob(obj).subscribe(success=>{
           this.myForm.reset();
-          alert('Your job was successfully posted!');  
+          alert('Your job was successfully posted!');
           this.router.navigate(['jobs']);
         },
         error=>{
@@ -74,6 +74,6 @@ export class CreateJobComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 }

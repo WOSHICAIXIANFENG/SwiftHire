@@ -1,7 +1,7 @@
 <div class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
-          <a [routerLink]="['']" class="navbar-brand">SwiftHire</a>
+          <a [routerLink]="['']" class="navbar-brand" >SwiftHire</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
 
           </button>
@@ -14,6 +14,9 @@
              <li class="dropdown">
                 <a [routerLink]="['jobs', 'enrolled']" class="dropdown-toggle" data-toggle="dropdown"> Enrolled Jobs </a>
             </li>
+            <li class="dropdown">
+                <a [routerLink]="['jobs', 'addJob']" class="dropdown-toggle" data-toggle="dropdown"> Create New Job </a>
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><toolbar></toolbar></li>
@@ -22,12 +25,12 @@
       </div>
     </div>
 
-    <div class="container">        
+    <div class="container">
       <div class="col-md-8">
         <router-outlet></router-outlet>
       </div>
     </div>
 
-    <createjob [jobObj]="tempObj"></createjob>
+    <!--<createjob [jobObj]="tempObj"></createjob>-->
 
 <!--<ratecomment [jobObj]="tempObj"></ratecomment>-->
