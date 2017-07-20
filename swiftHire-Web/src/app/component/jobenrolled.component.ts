@@ -37,7 +37,7 @@ import { Subscription } from "rxjs/Rx";
         </table>
     </div>
 
-    <app-job-details *ngIf="selectedData  && !hideFlag" [data]="selectedData" [hideApplyBtn]="true"></app-job-details>
+    <job_detail *ngIf="selectedData  && !hideFlag" [data]="selectedData" ></job_detail>
     <router-outlet></router-outlet>
     
   `

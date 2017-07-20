@@ -3,15 +3,16 @@ import { JobService } from "app/service/job.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'app-job-details',
-  templateUrl: './job-details.component.html',
+  selector: 'job_detail',
+  templateUrl: './job_detail.component.html',
   styleUrls: ['./job-details.component.css'],
   inputs: ['data']
 })
-export class JobDetailsComponent implements OnInit {
+export class JobDetailComponent implements OnInit {
   data;
 
   constructor(private jobService:JobService) {
+
   }
 
   ngOnInit() {

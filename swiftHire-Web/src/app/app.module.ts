@@ -21,6 +21,7 @@ import { CandidatesComponent } from './component/candidates.component';
 import { CommentComponent } from './component/comment.component';
 import { ToolbarComponent} from './component/toolbar.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { JobDetailComponent } from './job-details/job_detail.component';
 import { JobsPostedComponent } from './component/jobsposted.component';
 import { JobsEnrolledComponent } from './component/jobenrolled.component';
 import { RateCommentComponent } from './component/ratecomment.component';
@@ -46,6 +47,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     CommentComponent,
     ToolbarComponent,
     JobDetailsComponent,
+    JobDetailComponent,
     JobsPostedComponent,
     JobsEnrolledComponent,
     RateCommentComponent,
@@ -61,6 +63,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ReactiveFormsModule
   ],
   providers: [
+    Http,
     {
       provide: HttpService,
       useFactory: (backend: XHRBackend, options: RequestOptions) => {

@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from "@angular/router";
 import { JobsComponent } from "./jobs/jobs.component";
 import { JobDetailsComponent } from "./job-details/job-details.component";
+import { JobDetailComponent } from "./job-details/job_detail.component";
 import { ErrorComponent } from "./error/error.component";
 import { CandidatesComponent } from './component/candidates.component';
 import { CandidateComponent } from './component/candidate.component';
@@ -31,7 +32,7 @@ const MY_ROUTES: Routes = [
 
     { path: 'jobs/enrolled', canActivate:[MyCanActivateGuard], component: JobsEnrolledComponent, children:[
         {path: 'addcomment', canActivate:[MyCanActivateGuard], component: RateCommentComponent},
-        { path: 'details', canActivate:[MyCanActivateGuard], component: JobDetailsComponent }
+        { path: 'details', canActivate:[MyCanActivateGuard], component: JobDetailComponent }
     ]},
 
     { path: 'jobs/addJob', canActivate:[MyCanActivateGuard], component: CreateJobComponent},
