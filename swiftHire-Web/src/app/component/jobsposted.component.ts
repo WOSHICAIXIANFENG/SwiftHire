@@ -20,7 +20,7 @@ import { Subscription } from "rxjs/Rx";
             <td>{{j.name}}</td>
             <td>{{j.duration}}</td>
             <td>{{j.hourFee}}</td>
-            <td>{{j.preferDate}}</td>
+            <td>{{j.preferDate | date:"MM-dd-yyyy"}}</td>
             <td>{{j.preferTime}}</td>
             <td><a class="btn btn-primary" (click)="selectedData=j;hideFlag=false;">Details</a></td>
             <td><a [routerLink]="['candidates']" [queryParams]="{jobId: j._id}" class="btn btn-primary" (click)="onBtnClick()">Candidates</a></td>

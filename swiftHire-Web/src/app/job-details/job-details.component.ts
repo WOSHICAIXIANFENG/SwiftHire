@@ -11,11 +11,25 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class JobDetailsComponent implements OnInit {
   data;
 
-  constructor(private jobService:JobService) { 
+  constructor(private jobService:JobService) {
   }
 
   ngOnInit() {
-    
+
+  }
+
+  onSubmit() {
+    // apply one job for current user
+    let candidateId = localStorage.getItem("userId");
+    console.log("Samuel test candidateId = " + candidateId);
+    console.log("Samuel test this.data._id = " + this.data._id);
+    this.jobService.applyOneJob(candidateId, this.data._id).subscribe(
+      res => {
+        // you app success
+        alert("Your application was submitted successfully");
+
+      }
+    );
   }
 
 }

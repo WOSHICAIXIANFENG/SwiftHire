@@ -170,10 +170,10 @@ router.post('/choose', function(req, res, next){
 router.post('/apply', function(req, res, next){
     var candidateId = req.body.candidateId;
     var jobId = req.body.jobId;
-    //console.log("Samuel Test userId 9999 candidateId = " + candidateId + " , jobId = " + jobId);
-    req.users.find({_id: candidateId + ""}).toArray(function(err, docArray){
+    console.log("Samuel Test userId 9999 candidateId = " + candidateId + " , jobId = " + jobId);
+    req.users.find({_id: ObjectId(candidateId)}).toArray(function(err, docArray){
         if (err) next(err);
-        //console.log("Samuel Test userId 9999 doc = " + docArray);
+        console.log("Samuel Test userId 9999 doc = " + docArray);
         if (docArray && docArray.length > 0) {
             let candidate = docArray[0];
             let query = {_id: jobId};

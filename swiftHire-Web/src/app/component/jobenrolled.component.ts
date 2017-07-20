@@ -20,7 +20,7 @@ import { Subscription } from "rxjs/Rx";
             <td>{{j.name}}</td>
             <td>{{j.duration}}</td>
             <td>{{j.hourFee}}</td>
-            <td>{{j.preferDate}}</td>
+            <td>{{j.preferDate | date:"MM-dd-yyyy"}}</td>
             <td>{{j.preferTime}}</td>
             <td><a class="btn btn-primary" (click)="selectedData=j;hideFlag=false;">Details</a></td>
             <td *ngIf="checkIfJobStart()"><a [routerLink]="['addcomment']" [queryParams]="{jobId: j._id}" (click)="onBtnClick()" class="btn btn-primary">Add Comment</a></td>
@@ -30,7 +30,7 @@ import { Subscription } from "rxjs/Rx";
             <td>{{j.name}}</td>
             <td>{{j.duration}}</td>
             <td>{{j.hourFee}}</td>
-            <td>{{j.preferDate}}</td>
+            <td>{{j.preferDate | date:"MM-dd-yyyy" }}</td>
             <td>{{j.preferTime}}</td>
             <td><a class="btn btn-primary" (click)="selectedData=j">Details</a></td>
           </tr>
