@@ -6,6 +6,7 @@ import { Subscription } from "rxjs/Rx";
   selector: 'jobs-posted',
   template: `
     <div class="container">
+        <h1 align="center">Posted Jobs</h1>
         <table class="table">
           <tr class="row">
             <th>Tittle</th>
