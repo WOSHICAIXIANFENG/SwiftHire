@@ -46,10 +46,8 @@ export class JobsPostedComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     // try to get my userId from localstorage.
-    // todo it
-    let ownderId = 3;
-
-    this.subscription = this.jobService.getJobsPosted(ownderId).subscribe(resp=>{
+    let myId = localStorage.getItem("userId");
+    this.subscription = this.jobService.getJobsPosted(myId).subscribe(resp=>{
         //console.log(resp);
         this.jobs=resp.json();
       },

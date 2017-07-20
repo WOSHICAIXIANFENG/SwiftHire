@@ -38,4 +38,19 @@ export class UserService {
       "jobOwnerId":jobOwnerId
     });
   }
+
+
+  /**
+   * Update or insert one user
+   * @returns {Observable<Response>}
+   */
+  upsertOneUser(name:string, avatar:string, _id:string) {
+    let obj = {
+      "_id":_id,
+      "name":name,
+      "avatar":avatar
+    }
+
+    return this.http.post(AppConfig.BASE_URL + "users/upsert", obj);
+  }
 }
