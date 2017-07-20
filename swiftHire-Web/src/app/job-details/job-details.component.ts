@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JobService } from "app/service/job.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-job-details',
@@ -11,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class JobDetailsComponent implements OnInit {
   data;
 
-  constructor(private jobService:JobService) {
+  constructor(private jobService:JobService, private router: Router) {
   }
 
   ngOnInit() {
@@ -28,6 +29,8 @@ export class JobDetailsComponent implements OnInit {
         // you app success
         alert("Your application was submitted successfully");
 
+        // navigate to 'jobs/enrolled'
+        this.router.navigate(['jobs/enrolled']);
       }
     );
   }
